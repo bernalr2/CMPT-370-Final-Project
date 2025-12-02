@@ -56,17 +56,18 @@ async function main() {
     `#version 300 es
         in vec3 aPosition;
         in vec3 aNormal;
+        in vec2 aUV;
 
         uniform mat4 uProjectionMatrix;
         uniform mat4 uViewMatrix;
         uniform mat4 uModelMatrix;
-
         out vec3 oNormal;
+        out vec2 oUV;
 
         void main() {
             // Simply use this normal so no error is thrown
-            oNormal = aNormal;
-
+            oNormal = normalize(uModelMatrix * vec4(aNormal, 0.0)).xyz;
+            oUV = aUV;
             // Postion of the fragment in world space
             gl_Position = uProjectionMatrix * uViewMatrix * uModelMatrix * vec4(aPosition, 1.0);
         }
@@ -76,12 +77,28 @@ async function main() {
     `#version 300 es
         #define MAX_LIGHTS 20
         precision highp float;
+        in vec2 oUV;
 
+        struct pointLight {
+          vec3 position;
+          vec3 colour;
+          float strengh;
+        };
+
+        uniform pointLight mainLight;
         uniform vec3 diffuseVal;
+        uniform int samplerExists;
+        uniform sampler2D uTexture;
 
         out vec4 fragColor;
         void main() {
-            fragColor = vec4(diffuseVal, 1.0);
+            if (samplerExists == 1) {
+              vec3 textureColour = texture(uTexture, oUV).rgb;
+              fragColor = vec4(diffuseVal * textureColour, 1.0);
+            }
+            else {
+              fragColor = vec4(diffuseVal, 1.0);
+            }
         }
         `;
 
@@ -259,6 +276,8 @@ function drawScene(gl, deltaTime, state) {
       gl.uniform3fv(object.programInfo.uniformLocations.specularVal, object.material.specular);
       gl.uniform1f(object.programInfo.uniformLocations.nVal, object.material.n);
 
+      let mainLight = state.pointLights[0];
+
       gl.uniform1i(object.programInfo.uniformLocations.numLights, state.numLights);
       if (state.pointLights.length > 0) {
         for (let i = 0; i < state.pointLights.length; i++) {
@@ -269,14 +288,17 @@ function drawScene(gl, deltaTime, state) {
           gl.uniform1f(gl.getUniformLocation(object.programInfo.program, 'pointLights[' + i + '].quadratic'), state.pointLights[i].quadratic);
         }
       }
-
+      
+      gl.uniform3fv(gl.getUniformLocation(object.programInfo.program, 'mainLight.position'), mainLight.position);
+      gl.uniform3fv(gl.getUniformLocation(object.programInfo.program, 'mainLight.colour'), mainLight.colour);
+      gl.uniform1f(gl.getUniformLocation(object.programInfo.program, 'mainLight.strength'), mainLight.strength);
 
       {
         // Bind the buffer we want to draw
         gl.bindVertexArray(object.buffers.vao);
 
         //check for diffuse texture and apply it
-        if (object.model.texture != null) {
+        if (object.material.shaderType === 2) {
           state.samplerExists = 1;
           gl.activeTexture(gl.TEXTURE0);
           gl.uniform1i(object.programInfo.uniformLocations.samplerExists, state.samplerExists);
@@ -289,7 +311,7 @@ function drawScene(gl, deltaTime, state) {
         }
 
         //check for normal texture and apply it
-        if (object.model.textureNorm != null) {
+        if (object.material.shaderType === 3) {
           state.samplerNormExists = 1;
           gl.activeTexture(gl.TEXTURE1);
           gl.uniform1i(object.programInfo.uniformLocations.normalSamplerExists, state.samplerNormExists);
