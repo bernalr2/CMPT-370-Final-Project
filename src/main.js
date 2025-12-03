@@ -298,7 +298,7 @@ function drawScene(gl, deltaTime, state) {
         gl.bindVertexArray(object.buffers.vao);
 
         //check for diffuse texture and apply it
-        if (object.material.shaderType === 2) {
+        if (object.model.texture != null) {
           state.samplerExists = 1;
           gl.activeTexture(gl.TEXTURE0);
           gl.uniform1i(object.programInfo.uniformLocations.samplerExists, state.samplerExists);
@@ -311,7 +311,7 @@ function drawScene(gl, deltaTime, state) {
         }
 
         //check for normal texture and apply it
-        if (object.material.shaderType === 3) {
+        if (object.model.textureNorm != null) {
           state.samplerNormExists = 1;
           gl.activeTexture(gl.TEXTURE1);
           gl.uniform1i(object.programInfo.uniformLocations.normalSamplerExists, state.samplerNormExists);
