@@ -3,7 +3,6 @@ class Game {
     this.state = state;
     this.spawnedObjects = [];
     this.collidableObjects = [];
-    this.dice = [];
   }
 
   // example - we can add our own custom method to our game and call it using 'this.customMethod()'
@@ -60,34 +59,22 @@ class Game {
     //this.cube = getObject(this.state, "cube1");
     //const otherCube = getObject(this.state, "cube2"); // we wont save this as instance var since we dont plan on using it in update
 
-    // NEW - Set Dice into Dice Array
-    this.dice[0] = getObject(this.state, "Dice 1");
-    this.dice[1] = getObject(this.state, "Dice 2");
-    this.dice[2] = getObject(this.state, "Dice 3");
-    this.dice[3] = getObject(this.state, "Dice 4");
-    this.dice[4] = getObject(this.state, "Dice 5");
+    // NEW - Set Dice and Floor into the Objects
+    this.collidableObjects[0] = getObject(this.state, "Dice 1");
+    this.collidableObjects[1] = getObject(this.state, "Dice 2");
+    this.collidableObjects[2] = getObject(this.state, "Dice 3");
+    this.collidableObjects[3] = getObject(this.state, "Dice 4");
+    this.collidableObjects[4] = getObject(this.state, "Dice 5");
+    this.collidableObjects[5] = getObject(this.state, "Table Top");
     
-    // NEW - Create the Colliders on the Objects
+    // example - create sphere colliders on our two objects as an example, we give 2 objects colliders otherwise
     // no collision can happen
-    this.createSphereCollider(this.dice[0], 0.5, (otherObject) => {
-      console.log(`This is a custom collision of ${otherObject.name}`)
-    });
-    this.createSphereCollider(this.dice[1], 0.5, (otherObject) => {
-      console.log(`This is a custom collision of ${otherObject.name}`)
-    });
-    this.createSphereCollider(this.dice[2], 0.5, (otherObject) => {
-      console.log(`This is a custom collision of ${otherObject.name}`)
-    });
-    this.createSphereCollider(this.dice[3], 0.5, (otherObject) => {
-      console.log(`This is a custom collision of ${otherObject.name}`)
-    });
-    this.createSphereCollider(this.dice[4], 0.5, (otherObject) => {
-      console.log(`This is a custom collision of ${otherObject.name}`)
-    });
-    this.createSphereCollider(this.dice[5], 0.5, (otherObject) => {
-      console.log(`This is a custom collision of ${otherObject.name}`)
-    });
-
+    this.createSphereCollider(this.collidableObjects[0], 0.5);
+    this.createSphereCollider(this.collidableObjects[1], 0.5);
+    this.createSphereCollider(this.collidableObjects[2], 0.5);
+    this.createSphereCollider(this.collidableObjects[3], 0.5);
+    this.createSphereCollider(this.collidableObjects[4], 0.5);
+    this.createSphereCollider(this.collidableObjects[5], 0.5);
     //this.createSphereCollider(otherCube, 0.5);
 
     // example - setting up a key press event to move an object in the scene
@@ -98,17 +85,17 @@ class Game {
         // Spin the Dice
         case "a":
           //this.cube.translate(vec3.fromValues(0.5, 0, 0));
-          this.dice[0].rotate('x', 5.0);
-          this.dice[1].rotate('x', 5.0);
-          this.dice[2].rotate('x', 5.0);
-          this.dice[3].rotate('x', 5.0);
-          this.dice[4].rotate('x', 5.0);
+          this.collidableObjects[0].rotate('x', 5.0);
+          this.collidableObjects[1].rotate('x', 5.0);
+          this.collidableObjects[2].rotate('x', 5.0);
+          this.collidableObjects[3].rotate('x', 5.0);
+          this.collidableObjects[4].rotate('x', 5.0);
 
-          this.dice[0].rotate('y', 5.0);
-          this.dice[1].rotate('y', 5.0);
-          this.dice[2].rotate('y', 5.0);
-          this.dice[3].rotate('y', 5.0);
-          this.dice[4].rotate('y', 5.0);
+          this.collidableObjects[0].rotate('y', 5.0);
+          this.collidableObjects[1].rotate('y', 5.0);
+          this.collidableObjects[2].rotate('y', 5.0);
+          this.collidableObjects[3].rotate('y', 5.0);
+          this.collidableObjects[4].rotate('y', 5.0);
           break;
         
         // Drop the Dice
@@ -164,17 +151,17 @@ class Game {
     // TODO - Here we can add game logic, like moving game objects, detecting collisions, you name it. Examples of functions can be found in sceneFunctions
 
     // example: Rotate a single object we defined in our start method
-    this.dice[0].rotate('x', deltaTime * 1.0);
-    this.dice[1].rotate('x', deltaTime * 1.0);
-    this.dice[2].rotate('x', deltaTime * 0.5);
-    this.dice[3].rotate('x', deltaTime * 0.5);
-    this.dice[4].rotate('x', deltaTime * 0.5);
+    this.collidableObjects[0].rotate('x', deltaTime * 0.5);
+    this.collidableObjects[1].rotate('x', deltaTime * 0.5);
+    this.collidableObjects[2].rotate('x', deltaTime * 0.5);
+    this.collidableObjects[3].rotate('x', deltaTime * 0.5);
+    this.collidableObjects[4].rotate('x', deltaTime * 0.5);
 
-    this.dice[0].rotate('y', deltaTime * 1.0);
-    this.dice[1].rotate('y', deltaTime * 1.0);
-    this.dice[2].rotate('y', deltaTime * 0.5);
-    this.dice[3].rotate('y', deltaTime * 0.5);
-    this.dice[4].rotate('y', deltaTime * 0.5);
+    this.collidableObjects[0].rotate('y', deltaTime * 0.5);
+    this.collidableObjects[1].rotate('y', deltaTime * 0.5);
+    this.collidableObjects[2].rotate('y', deltaTime * 0.5);
+    this.collidableObjects[3].rotate('y', deltaTime * 0.5);
+    this.collidableObjects[4].rotate('y', deltaTime * 0.5);
     // this.cube.rotate('x', deltaTime * 0.5);
 
     // example: Rotate all objects in the scene marked with a flag
