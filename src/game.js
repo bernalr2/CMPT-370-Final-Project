@@ -3,7 +3,45 @@ class Game {
     this.state = state;
     this.spawnedObjects = [];
     this.collidableObjects = [];
+    this.multiplier = 1;
   }
+
+  getDieValue(dieObject) {
+
+    const worldUp = vec3.fromValues(0, 1, 0);
+
+    // Faces and their local directions
+    const faces = [
+      { value: 1, dir: vec3.fromValues(0, 1, 0) },   // +Y
+      { value: 6, dir: vec3.fromValues(0, -1, 0) },  // -Y
+      { value: 3, dir: vec3.fromValues(1, 0, 0) },   // +X
+      { value: 4, dir: vec3.fromValues(-1, 0, 0) },  // -X
+      { value: 2, dir: vec3.fromValues(0, 0, 1) },   // +Z
+      { value: 5, dir: vec3.fromValues(0, 0, -1) }   // -Z
+    ];
+
+    // (already a 4×4, but we use only the 3×3 upper-left part)
+    const rot3 = mat3.create();
+    mat3.fromMat4(rot3, dieObject.model.rotation);
+
+    let best = { value: null, dot: -999 };
+
+    faces.forEach(face => {
+      let transformed = vec3.create();
+      vec3.transformMat3(transformed, face.dir, rot3);
+      vec3.normalize(transformed, transformed);
+
+      let dot = vec3.dot(transformed, worldUp);
+
+      if (dot > best.dot) {
+      best.value = face.value;
+      best.dot = dot;
+      }
+    });
+
+    return best.value;
+  }
+
 
   // example - we can add our own custom method to our game and call it using 'this.customMethod()'
   customMethod() {
@@ -68,7 +106,6 @@ class Game {
     this.collidableObjects[5] = getObject(this.state, "Table Top");
     
     // example - create sphere colliders on our two objects as an example, we give 2 objects colliders otherwise
-    // no collision can happen
     this.createSphereCollider(this.collidableObjects[0], 0.5);
     this.createSphereCollider(this.collidableObjects[1], 0.5);
     this.createSphereCollider(this.collidableObjects[2], 0.5);
@@ -85,7 +122,7 @@ class Game {
         // Spin the Dice
         case "a":
           //this.cube.translate(vec3.fromValues(0.5, 0, 0));
-          this.collidableObjects[0].rotate('x', 5.0);
+          /*this.collidableObjects[0].rotate('x', 5.0);
           this.collidableObjects[1].rotate('x', 5.0);
           this.collidableObjects[2].rotate('x', 5.0);
           this.collidableObjects[3].rotate('x', 5.0);
@@ -95,7 +132,7 @@ class Game {
           this.collidableObjects[1].rotate('y', 5.0);
           this.collidableObjects[2].rotate('y', 5.0);
           this.collidableObjects[3].rotate('y', 5.0);
-          this.collidableObjects[4].rotate('y', 5.0);
+          this.collidableObjects[4].rotate('y', 5.0);*/
           break;
         
         // Drop the Dice
@@ -151,17 +188,55 @@ class Game {
     // TODO - Here we can add game logic, like moving game objects, detecting collisions, you name it. Examples of functions can be found in sceneFunctions
 
     // example: Rotate a single object we defined in our start method
-    this.collidableObjects[0].rotate('x', deltaTime * 0.5);
-    this.collidableObjects[1].rotate('x', deltaTime * 0.5);
-    this.collidableObjects[2].rotate('x', deltaTime * 0.5);
-    this.collidableObjects[3].rotate('x', deltaTime * 0.5);
-    this.collidableObjects[4].rotate('x', deltaTime * 0.5);
+    this.collidableObjects[0].rotate('x', this.multiplier * deltaTime / 3600);
+    this.collidableObjects[1].rotate('x', this.multiplier * deltaTime / 3600);
+    this.collidableObjects[2].rotate('x', this.multiplier * deltaTime / 3600);
+    this.collidableObjects[3].rotate('x', this.multiplier * deltaTime / 3600);
+    this.collidableObjects[4].rotate('x', this.multiplier * deltaTime / 3600);
 
-    this.collidableObjects[0].rotate('y', deltaTime * 0.5);
-    this.collidableObjects[1].rotate('y', deltaTime * 0.5);
-    this.collidableObjects[2].rotate('y', deltaTime * 0.5);
-    this.collidableObjects[3].rotate('y', deltaTime * 0.5);
-    this.collidableObjects[4].rotate('y', deltaTime * 0.5);
+    this.collidableObjects[0].rotate('y', this.multiplier * deltaTime / 3600);
+    this.collidableObjects[1].rotate('y', this.multiplier * deltaTime / 3600);
+    this.collidableObjects[2].rotate('y', this.multiplier * deltaTime / 3600);
+    this.collidableObjects[3].rotate('y', this.multiplier * deltaTime / 3600);
+    this.collidableObjects[4].rotate('y', this.multiplier * deltaTime / 3600);
+    document.addEventListener("keypress", (e) => {
+      e.preventDefault();
+
+      switch (e.key) {
+        case "a":
+          this.multiplier += 1;
+          break;
+        case "d":
+          if (this.multiplier > 0) {
+            this.multiplier -= 1;
+          }
+          else if (this.multiplier < 0) {
+            this.multiplier = 0;
+          }
+          break;
+      }
+    });
+    //console.log(this.multiplier);
+    // When dice stop spinning, read values
+    if (this.multiplier === 0) {
+
+      let results = [];
+
+      // Your dice are in collidableObjects[0] to collidableObjects[4]
+      for (let i = 0; i < 5; i++) {
+        results.push(this.getDieValue(this.collidableObjects[i]));
+      }
+
+      console.log("Dice roll results: ", results);
+      let sum = 0;
+      for (let i = 0; i < results.length; i++) {
+        sum += results[i];
+      }
+      console.log("The sum of all numbers is: ", sum);
+  }
+
+
+    //console.log(this.multiplier);
     // this.cube.rotate('x', deltaTime * 0.5);
 
     // example: Rotate all objects in the scene marked with a flag
