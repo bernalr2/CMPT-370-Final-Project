@@ -4,6 +4,12 @@ class Game {
     this.spawnedObjects = [];
     this.collidableObjects = [];
     this.multiplier = 1;
+
+    // Help for camera logic
+    this.isFirstPerson = true;
+    this.mainCam = null;
+    this.altCam = null
+
   }
 
   getDieValue(dieObject) {
@@ -40,6 +46,13 @@ class Game {
     });
 
     return best.value;
+  }
+
+  updateCamera(view){
+    console.log("Update camera called");
+    vec3.copy(this.state.camera.position, view.position);
+    vec3.copy(this.state.camera.front, view.front);
+    vec3.copy(this.state.camera.up, view.up);
   }
 
 
@@ -92,6 +105,25 @@ class Game {
     document.addEventListener("contextmenu", (e) => {
       e.preventDefault();
     }, false);
+
+
+    
+
+    const cam = this.state.camera;
+
+    this.mainCam = {
+      position: vec3.clone(cam.position),
+      front:    vec3.clone(cam.front),
+      up:       vec3.clone(cam.up),
+    };
+
+    
+    this.altCam = {
+      position: vec3.fromValues(0, 4, 0),  
+      front:    vec3.fromValues(0, -1, 0),  
+      up:       vec3.fromValues(0, 0, -1),  
+    };
+
 
     // example - set an object in onStart before starting our render loop!
     //this.cube = getObject(this.state, "cube1");
@@ -212,6 +244,16 @@ class Game {
           }
           else if (this.multiplier < 0) {
             this.multiplier = 0;
+          }
+          break;
+        case "p":
+          console.log("P is pressed");
+          this.isFirstPerson = !(this.isFirstPerson);
+          if (this.isFirstPerson){
+            this.updateCamera(this.mainCam);
+          }
+          else{
+            this.updateCamera(this.altCam);
           }
           break;
       }
