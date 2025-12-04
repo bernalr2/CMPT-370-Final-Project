@@ -3,7 +3,12 @@ class Game {
     this.state = state;
     this.spawnedObjects = [];
     this.collidableObjects = [];
+
+    // Game Tracking Logic
     this.multiplier = 1;
+    this.currentRound = 0;
+    this.playerScore = 0;
+    this.NPCScore = 0;
 
     // Help for camera logic
     this.isFirstPerson = true;
@@ -89,6 +94,26 @@ class Game {
       // ie: 
       if (collide){ object.collider.onCollide(otherObject) } // fires what we defined our object should do when it collides
     });
+  }
+  
+  // This function calulates the NPC rolls instantly
+  calculateNPCRolls(round) {
+    let rolled = [];
+    for (let i = 0; i < 5; i++) {
+      let val = (Math.floor(Math.random() * 6)) + 1;
+      rolled.push(val);
+      //console.log("Value NPC Rolled: ", val);
+      if (round == val) {
+        this.NPCScore += 1;
+      }
+    }
+    console.log("NPC Dice roll results: ", rolled);
+  }
+
+  startIntroduction() {
+    console.log("Welcome to Yahtzee: WebGL Edition! To start rolling, hold the a button to spin the dice and hold the d button to stop rolling and get a score on the dice.");
+    console.log("Once the dice stop moving, the values are scored on how many you achieved of each number.");
+    console.log("For example: If this was round 1: we cound how many dice rolled 1 and that adds to our total score and etc.");
   }
 
   // Stop the rotation on the collided objects
@@ -179,6 +204,8 @@ class Game {
 
     this.customMethod(); // calling our custom method! (we could put spawning logic, collision logic etc in there ;) )
 
+    this.startIntroduction();
+
     // example: spawn some stuff before the scene starts
     // for (let i = 0; i < 10; i++) {
     //     for (let j = 0; j < 10; j++) {
@@ -220,24 +247,27 @@ class Game {
     // TODO - Here we can add game logic, like moving game objects, detecting collisions, you name it. Examples of functions can be found in sceneFunctions
 
     // example: Rotate a single object we defined in our start method
-    this.collidableObjects[0].rotate('x', this.multiplier * deltaTime / 3600);
-    this.collidableObjects[1].rotate('x', this.multiplier * deltaTime / 3600);
-    this.collidableObjects[2].rotate('x', this.multiplier * deltaTime / 3600);
-    this.collidableObjects[3].rotate('x', this.multiplier * deltaTime / 3600);
-    this.collidableObjects[4].rotate('x', this.multiplier * deltaTime / 3600);
+    // Added a Math.random() multiplier to make the objects rotate at different speeds
+    this.collidableObjects[0].rotate('x', this.multiplier * deltaTime / 3600 * (Math.random() * 10));
+    this.collidableObjects[1].rotate('x', this.multiplier * deltaTime / 3600 * (Math.random() * 10));
+    this.collidableObjects[2].rotate('x', this.multiplier * deltaTime / 3600 * (Math.random() * 10));
+    this.collidableObjects[3].rotate('x', this.multiplier * deltaTime / 3600 * (Math.random() * 10));
+    this.collidableObjects[4].rotate('x', this.multiplier * deltaTime / 3600 * (Math.random() * 10));
 
-    this.collidableObjects[0].rotate('y', this.multiplier * deltaTime / 3600);
-    this.collidableObjects[1].rotate('y', this.multiplier * deltaTime / 3600);
-    this.collidableObjects[2].rotate('y', this.multiplier * deltaTime / 3600);
-    this.collidableObjects[3].rotate('y', this.multiplier * deltaTime / 3600);
-    this.collidableObjects[4].rotate('y', this.multiplier * deltaTime / 3600);
+    this.collidableObjects[0].rotate('y', this.multiplier * deltaTime / 3600 * (Math.random() * 10));
+    this.collidableObjects[1].rotate('y', this.multiplier * deltaTime / 3600 * (Math.random() * 10));
+    this.collidableObjects[2].rotate('y', this.multiplier * deltaTime / 3600 * (Math.random() * 10));
+    this.collidableObjects[3].rotate('y', this.multiplier * deltaTime / 3600 * (Math.random() * 10));
+    this.collidableObjects[4].rotate('y', this.multiplier * deltaTime / 3600 * (Math.random() * 10));
     document.addEventListener("keypress", (e) => {
       e.preventDefault();
 
       switch (e.key) {
+        // Spin the Dice
         case "a":
           this.multiplier += 1;
           break;
+        // Slow the Dice
         case "d":
           if (this.multiplier > 0) {
             this.multiplier -= 1;
@@ -246,6 +276,7 @@ class Game {
             this.multiplier = 0;
           }
           break;
+        // Change Camera Perspective
         case "p":
           console.log("P is pressed");
           this.isFirstPerson = !(this.isFirstPerson);
@@ -259,7 +290,8 @@ class Game {
       }
     });
     //console.log(this.multiplier);
-    // When dice stop spinning, read values
+
+    // When dice stop spinning, read values to check results
     if (this.multiplier === 0) {
 
       let results = [];
@@ -269,13 +301,47 @@ class Game {
         results.push(this.getDieValue(this.collidableObjects[i]));
       }
 
-      console.log("Dice roll results: ", results);
+      // Log Player Roll results into an array
+      console.log("Player Dice roll results: ", results);
       let sum = 0;
       for (let i = 0; i < results.length; i++) {
         sum += results[i];
       }
-      console.log("The sum of all numbers is: ", sum);
+      //console.log("The sum of the players numbers is: ", sum);
+
+      // Increment the round
+      this.multiplier = 1;
+      this.currentRound += 1;
+
+      // Calculate NPC and Player Score
+      this.calculateNPCRolls(this.currentRound);
+      for (let i = 0; i < results.length; i++) {
+        if (results[i] === this.currentRound) {
+          this.playerScore += 1;
+        }
+      }
+
+      // Print out Results
+      console.log("The current round is: ", this.currentRound);
+      console.log("The Player score is: ", this.playerScore);
+      console.log("The NPC score is: ", this.NPCScore);
   }
+
+  // Once the final round has been finished (Round 6)
+  if (this.currentRound === 6) {
+    if (this.playerScore > this.NPCScore) {
+      console.log("Player Wins!");
+    }
+    else if (this.NPCScore > this.playerScore) {
+      console.log("NPC Wins!");
+    }
+    else if (this.NPCScore === this.playerScore) {
+      console.log("Tied. No one wins.");
+    }
+    this.currentRound += 1;
+
+    // This marks the end of the gameplay loop
+  };
 
 
     //console.log(this.multiplier);
