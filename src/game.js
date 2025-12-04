@@ -54,7 +54,6 @@ class Game {
   }
 
   updateCamera(view){
-    console.log("Update camera called");
     vec3.copy(this.state.camera.position, view.position);
     vec3.copy(this.state.camera.front, view.front);
     vec3.copy(this.state.camera.up, view.up);
@@ -196,6 +195,16 @@ class Game {
         case "d":
           //this.cube.translate(vec3.fromValues(-0.5, 0, 0));
           break;
+        // Change Camera Perspective
+        case "p":
+          this.isFirstPerson = !(this.isFirstPerson);
+          if (this.isFirstPerson){
+            this.updateCamera(this.mainCam);
+          }
+          else{
+            this.updateCamera(this.altCam);
+          }
+          break;
 
         default:
           break;
@@ -277,16 +286,7 @@ class Game {
           }
           break;
         // Change Camera Perspective
-        case "p":
-          console.log("P is pressed");
-          this.isFirstPerson = !(this.isFirstPerson);
-          if (this.isFirstPerson){
-            this.updateCamera(this.mainCam);
-          }
-          else{
-            this.updateCamera(this.altCam);
-          }
-          break;
+        
       }
     });
     //console.log(this.multiplier);
