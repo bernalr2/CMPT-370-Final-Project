@@ -43,9 +43,9 @@ class Game {
     {
         id: "status",
         text: "Null",
-        x: 140,
-        y: 140,
-        font: "12px Arial",
+        x: 90,
+        y: 70,
+        font: "24px Arial",
         color: "white"
     }
     ];
@@ -350,15 +350,15 @@ class Game {
   if (this.currentRound === 6) {
     if (this.playerScore > this.NPCScore) {
       //console.log("Player Wins!");
-      updateStatus("Player Wins!");
+      this.updateStatus("Player Wins!");
     }
     else if (this.NPCScore > this.playerScore) {
       //console.log("NPC Wins!");
-      updateStatus("NPC Wins!");
+      this.updateStatus("NPC Wins!");
     }
     else if (this.NPCScore === this.playerScore) {
       //console.log("Tied. No one wins.");
-      updateStatus("Nobody Wins!");
+      this.updateStatus("Nobody Wins!");
     }
     this.currentRound += 1;
 
