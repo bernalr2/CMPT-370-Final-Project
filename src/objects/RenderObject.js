@@ -101,18 +101,19 @@ class RenderObject {
         projection: this.gl.getUniformLocation(shaderProgram, 'uProjectionMatrix'),
         view: this.gl.getUniformLocation(shaderProgram, 'uViewMatrix'),
         model: this.gl.getUniformLocation(shaderProgram, 'uModelMatrix'),
-        // normalMatrix: this.gl.getUniformLocation(shaderProgram, 'normalMatrix'),
+        normalMatrix: this.gl.getUniformLocation(shaderProgram, 'normalMatrix'),
         diffuseVal: this.gl.getUniformLocation(shaderProgram, 'diffuseVal'),
-        // ambientVal: this.gl.getUniformLocation(shaderProgram, 'ambientVal'),
-        // specularVal: this.gl.getUniformLocation(shaderProgram, 'specularVal'),
-        // nVal: this.gl.getUniformLocation(shaderProgram, 'nVal'),
-        // cameraPosition: this.gl.getUniformLocation(shaderProgram, 'uCameraPosition'),
-        // numLights: this.gl.getUniformLocation(shaderProgram, 'numLights'),
+        ambientVal: this.gl.getUniformLocation(shaderProgram, 'ambientVal'),
+        specularVal: this.gl.getUniformLocation(shaderProgram, 'specularVal'),
+        nVal: this.gl.getUniformLocation(shaderProgram, 'nVal'),
+        //cameraPosition: this.gl.getUniformLocation(shaderProgram, 'uCameraPosition'),
+        //numLights: this.gl.getUniformLocation(shaderProgram, 'numLights'),
         // lightPositions: this.gl.getUniformLocation(shaderProgram, 'uLightPositions'),
         // lightColours: this.gl.getUniformLocation(shaderProgram, 'uLightColours'),
         // lightStrengths: this.gl.getUniformLocation(shaderProgram, 'uLightStrengths'),
         sampler: this.gl.getUniformLocation(shaderProgram, 'uTexture'),
-        samplerExists: this.gl.getUniformLocation(shaderProgram, "samplerExists")
+        samplerExists: this.gl.getUniformLocation(shaderProgram, "samplerExists"),
+        alphaVal: this.gl.getUniformLocation(shaderProgram, 'alphaVal')
       },
     };
     shaderValuesErrorCheck(programInfo);
