@@ -15,6 +15,40 @@ class Game {
     this.mainCam = null;
     this.altCam = null
 
+    this.uiTexts = [
+    {
+        id: "player",
+        text: "Score: 0",
+        x: 10,
+        y: 15,
+        font: "12px Arial",
+        color: "blue"
+    },
+    {
+        id: "enemy",
+        text: "Score: 0",
+        x: 200,
+        y: 140,
+        font: "12px Arial",
+        color: "red"
+    },
+    {
+        id: "round",
+        text: "Round: 0",
+        x: 240,
+        y: 15,
+        font: "12px Arial",
+        color: "white"
+    },
+    {
+        id: "status",
+        text: "Null",
+        x: 140,
+        y: 140,
+        font: "12px Arial",
+        color: "white"
+    }
+    ];
   }
 
   // Obtain the Dice Value based on the face that is most upright
@@ -117,6 +151,38 @@ class Game {
     object.rotate('y', 0);
   }
 
+  /* UI Drawing Functions */
+  drawUI() {
+      ctx.clearRect(0, 0, textCanvas.width, textCanvas.height);
+
+      for (let t of this.uiTexts) {
+          ctx.font = t.font;
+          ctx.fillStyle = t.color;
+          ctx.fillText(t.text, t.x, t.y);
+      }
+  }
+
+  updateRound(value) {
+      this.uiTexts.find(t => t.id === "round").text = "Round: " + value;
+      this.drawUI();
+  }
+
+  updateScore(value) {
+      this.uiTexts.find(t => t.id === "player").text = "Player Score: " + value;
+      this.drawUI();
+  }
+
+  updateLives(value) {
+      this.uiTexts.find(t => t.id === "enemy").text = "Enemy Score: " + value;
+      this.drawUI();
+  }
+
+  updateStatus(value) {
+      this.uiTexts.find(t => t.id === "status").text = value;
+      this.drawUI();
+  }
+
+
   /* MAIN GAME LOOP (onStart() and onUpdate()) STARTS HERE */
 
   // runs once on startup after the scene loads the objects
@@ -144,6 +210,11 @@ class Game {
       front:    vec3.fromValues(0, -1, 0),  
       up:       vec3.fromValues(0, 0, -1),  
     };
+
+    this.updateRound(1);
+    this.updateScore(0);
+    this.updateLives(0);
+    this.updateStatus("");
 
     // NEW - Set Dice and Floor into the Objects
     this.collidableObjects[0] = getObject(this.state, "Dice 1");
@@ -263,26 +334,34 @@ class Game {
           this.playerScore += 1;
         }
       }
+      
+      // Update UIs
+      this.updateRound(this.currentRound);
+      this.updateScore(this.playerScore);
+      this.updateLives(this.NPCScore);
 
-      // Print out Results
-      console.log("The current round is: ", this.currentRound);
-      console.log("The Player score is: ", this.playerScore);
-      console.log("The NPC score is: ", this.NPCScore);
+      // Debug Logs
+      //console.log("The current round is: ", this.currentRound);
+      //console.log("The Player score is: ", this.playerScore);
+      //console.log("The NPC score is: ", this.NPCScore);
   }
 
   // Once the final round has been finished (Round 6)
   if (this.currentRound === 6) {
     if (this.playerScore > this.NPCScore) {
-      console.log("Player Wins!");
+      //console.log("Player Wins!");
+      updateStatus("Player Wins!");
     }
     else if (this.NPCScore > this.playerScore) {
-      console.log("NPC Wins!");
+      //console.log("NPC Wins!");
+      updateStatus("NPC Wins!");
     }
     else if (this.NPCScore === this.playerScore) {
-      console.log("Tied. No one wins.");
+      //console.log("Tied. No one wins.");
+      updateStatus("Nobody Wins!");
     }
     this.currentRound += 1;
-    
+
   };
     /* THIS MARKS THE END OF THE GAMEPLAY LOOP */
   }
