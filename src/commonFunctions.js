@@ -449,7 +449,7 @@ function makeDiceAtlasUVs() {
   var v1 = 2 * tile;
 
   
-  newUVs.push(u0, v0, u0, v1, u1, v1, u1, v0);
+  newUVs.push(u0, v0,  u1, v0,  u0, v1,  u1, v1);
   
   // 6
 
@@ -458,7 +458,7 @@ function makeDiceAtlasUVs() {
   var v0 = 2 * tile;
   var v1 = 3 * tile;
 
-  newUVs.push(u0, v0, u0, v1, u1, v1, u1, v0);
+  newUVs.push(u1, v0,  u0, v0,  u1, v1,  u0, v1);
   
 
   return (newUVs);
