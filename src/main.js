@@ -122,7 +122,7 @@ async function main() {
             vec3 L = normalize(mainLight.position - oFragPosition);
 
             // Can change the value from 0.0 - 1.0 if you wan some light on everything else. 
-            float NdotL = max(dot(normal, L), 0.0);
+            float NdotL = max(dot(normal, L), 0.3);
 
             vec3 diffuse = diffuseVal * mainLight.colour * NdotL * mainLight.strength;
 

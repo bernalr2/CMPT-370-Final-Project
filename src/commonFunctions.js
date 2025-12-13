@@ -397,11 +397,86 @@ function parseSceneFile(file, state) {
   })
 }
 
+function makeDiceAtlasUVs() {
+  // Our image is 3x3 for squares. 
+  const tile = 1.0 / 3.0;
+  
+
+  let newUVs = [];
+
+  // 1
+  var u0 = 0 * tile;
+  var u1 = 1 * tile;
+  var v0 = 0 * tile;
+  var v1 = 1 * tile;
+
+  newUVs.push(u0, v0, u0, v1, u1, v1, u1, v0);
+
+
+  // 2
+
+  var u0 = 2 * tile;
+  var u1 = 3 * tile;
+  var v0 = 1 * tile;
+  var v1 = 2 * tile;
+
+  newUVs.push(u0, v0, u0, v1, u1, v1, u1, v0);
+
+  // 3  
+
+  var u0 = 1 * tile;
+  var u1 = 2 * tile;
+  var v0 = 1 * tile;
+  var v1 = 2 * tile;
+
+  newUVs.push(u0, v0, u0, v1, u1, v1, u1, v0);
+  
+
+  // 4 
+
+  var u0 = 1 * tile;
+  var u1 = 2 * tile;
+  var v0 = 2 * tile;
+  var v1 = 3 * tile;
+
+  newUVs.push(u0, v0, u0, v1, u1, v1, u1, v0);
+
+  // 5
+  
+  var u0 = 0 * tile;
+  var u1 = 1 * tile;
+  var v0 = 1 * tile;
+  var v1 = 2 * tile;
+
+  
+  newUVs.push(u0, v0, u0, v1, u1, v1, u1, v0);
+  
+  // 6
+
+  var u0 = 0 * tile;
+  var u1 = 1 * tile;
+  var v0 = 2 * tile;
+  var v1 = 3 * tile;
+
+  newUVs.push(u0, v0, u0, v1, u1, v1, u1, v0);
+  
+
+  return (newUVs);
+
+}
+
 function addCube(object, state, vertShader = null, fragShader = null) {
   let tempCube = new Cube(state.gl, object);
   tempCube.vertShader = vertShader ? vertShader : state.vertShaderSample;
   tempCube.fragShader = fragShader ? fragShader : state.fragShaderSample;
   tempCube.setup();
+
+  // Checks if the object is a dice, if it is we set new UV's for our dice objects.
+  if (object.material.atlasFlag === "dice_atlas"){
+    tempCube.model.uvs = makeDiceAtlasUVs();
+    tempCube.initBuffers();
+  }
+
   addObjectToScene(state, tempCube);
   return tempCube;
 }
