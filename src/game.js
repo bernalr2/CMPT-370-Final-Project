@@ -9,6 +9,10 @@ class Game {
     this.currentRound = 0;
     this.playerScore = 0;
     this.NPCScore = 0;
+    this.playerCounter = 0;
+    this.NPCCounter = 0;
+    this.canScore = true;
+    this.gameOver = false;
 
     // Help for camera logic
     this.isFirstPerson = true;
@@ -45,7 +49,15 @@ class Game {
         text: "Null",
         x: 90,
         y: 70,
-        font: "24px Arial",
+        font: "12px Arial",
+        color: "white"
+    },
+    {
+        id: "message",
+        text: "Starting Game Now!",
+        x: 10,
+        y: 140,
+        font: "8px Arial",
         color: "white"
     }
     ];
@@ -133,6 +145,7 @@ class Game {
       //console.log("Value NPC Rolled: ", val);
       if (round == val) {
         this.NPCScore += 1;
+        this.NPCCounter += 1;
       }
     }
     console.log("NPC Dice roll results: ", rolled);
@@ -182,6 +195,15 @@ class Game {
       this.drawUI();
   }
 
+  updateMessage(value) {
+    this.uiTexts.find(t => t.id === "message").text = value;
+    this.drawUI();
+  }
+
+  doSomething() {
+    console.log("Hello!");
+  }
+
 
   /* MAIN GAME LOOP (onStart() and onUpdate()) STARTS HERE */
 
@@ -214,9 +236,10 @@ class Game {
     this.updateRound(1);
     this.updateScore(0);
     this.updateLives(0);
-    this.updateStatus("");
+    this.updateStatus("Press A to start rolling!");
+    this.updateMessage("Starting Game Now!");
 
-    // NEW - Set Dice and Floor into the Objects
+    // Set Dice and Floor into the Collidable Objects Array
     this.collidableObjects[0] = getObject(this.state, "Dice 1");
     this.collidableObjects[1] = getObject(this.state, "Dice 2");
     this.collidableObjects[2] = getObject(this.state, "Dice 3");
@@ -224,13 +247,17 @@ class Game {
     this.collidableObjects[4] = getObject(this.state, "Dice 5");
     this.collidableObjects[5] = getObject(this.state, "Table Top");
     
-    // example - create sphere colliders on our two objects as an example, we give 2 objects colliders otherwise
+    // Create Sphere Colliders around our dice and objects
+    for (let i = 0; i < 6; i++) {
+      this.createSphereCollider(this.collidableObjects[i], 0.5);
+    }
+    /*
     this.createSphereCollider(this.collidableObjects[0], 0.5);
     this.createSphereCollider(this.collidableObjects[1], 0.5);
     this.createSphereCollider(this.collidableObjects[2], 0.5);
     this.createSphereCollider(this.collidableObjects[3], 0.5);
     this.createSphereCollider(this.collidableObjects[4], 0.5);
-    this.createSphereCollider(this.collidableObjects[5], 0.5);
+    this.createSphereCollider(this.collidableObjects[5], 0.5);*/
     //this.createSphereCollider(otherCube, 0.5);
 
     // example - setting up a key press event to move an object in the scene
@@ -258,6 +285,12 @@ class Game {
           }
           break;
 
+        case "r":
+          if (this.gameOver != false) {
+            location.reload();
+          }
+          break;
+
         default:
           break;
       }
@@ -272,17 +305,10 @@ class Game {
   onUpdate(deltaTime) {
 
     // Added a Math.random() multiplier to make the objects rotate at different speeds
-    this.collidableObjects[0].rotate('x', this.multiplier * deltaTime / 3600 * (Math.random() * 10));
-    this.collidableObjects[1].rotate('x', this.multiplier * deltaTime / 3600 * (Math.random() * 10));
-    this.collidableObjects[2].rotate('x', this.multiplier * deltaTime / 3600 * (Math.random() * 10));
-    this.collidableObjects[3].rotate('x', this.multiplier * deltaTime / 3600 * (Math.random() * 10));
-    this.collidableObjects[4].rotate('x', this.multiplier * deltaTime / 3600 * (Math.random() * 10));
-
-    this.collidableObjects[0].rotate('y', this.multiplier * deltaTime / 3600 * (Math.random() * 10));
-    this.collidableObjects[1].rotate('y', this.multiplier * deltaTime / 3600 * (Math.random() * 10));
-    this.collidableObjects[2].rotate('y', this.multiplier * deltaTime / 3600 * (Math.random() * 10));
-    this.collidableObjects[3].rotate('y', this.multiplier * deltaTime / 3600 * (Math.random() * 10));
-    this.collidableObjects[4].rotate('y', this.multiplier * deltaTime / 3600 * (Math.random() * 10));
+    for (let i = 0; i < 5; i++) {
+      this.collidableObjects[i].rotate('x', this.multiplier * deltaTime / 3600 * (Math.random() * 10));
+      this.collidableObjects[i].rotate('y', this.multiplier * deltaTime / 3600 * (Math.random() * 10));
+    }
 
     document.addEventListener("keypress", (e) => {
       e.preventDefault();
@@ -290,23 +316,27 @@ class Game {
       switch (e.key) {
         // Spin the Dice
         case "a":
-          this.multiplier += 1;
-          break;
+          if (this.gameOver != true) {
+            this.multiplier = 100000;
+            this.canScore = true;
+            this.updateStatus("Press D to stop rolling!");
+            break;
+          }
         // Slow the Dice
         case "d":
-          if (this.multiplier > 0) {
-            this.multiplier -= 1;
-          }
-          else if (this.multiplier < 0) {
-            this.multiplier = 0;
-          }
+          this.multiplier = 0;
           break;
+
       }
     });
     //console.log(this.multiplier);
 
     // When dice stop spinning, read values to check results
-    if (this.multiplier === 0) {
+    if (this.multiplier <= 0 && this.canScore == true) {
+
+      this.multipier = 0;
+
+      this.canScore = false;
 
       let results = [];
 
@@ -332,6 +362,7 @@ class Game {
       for (let i = 0; i < results.length; i++) {
         if (results[i] === this.currentRound) {
           this.playerScore += 1;
+          this.playerCounter += 1;
         }
       }
  
@@ -344,6 +375,11 @@ class Game {
       this.updateRound(this.currentRound);
       this.updateScore(this.playerScore);
       this.updateLives(this.NPCScore);
+      this.updateMessage("This round: Player scored " + this.playerCounter + " while NPC scored " + this.NPCCounter);
+      this.updateStatus("Press A to start rolling!");
+
+      this.playerCounter = 0;
+      this.NPCCounter = 0;
 
       // Debug Logs
       //console.log("The current round is: ", this.currentRound);
@@ -366,6 +402,8 @@ class Game {
       this.updateStatus("Nobody Wins!");
     }
     this.currentRound += 1;
+    this.updateMessage("Press R to restart game!");
+    this.gameOver = true;
 
   };
     /* THIS MARKS THE END OF THE GAMEPLAY LOOP */
