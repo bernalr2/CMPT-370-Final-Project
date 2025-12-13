@@ -70,12 +70,12 @@ class Game {
 
     // Faces and their local directions
     const faces = [
-      { value: 1, dir: vec3.fromValues(0, 1, 0) },   // +Y
-      { value: 6, dir: vec3.fromValues(0, -1, 0) },  // -Y
-      { value: 3, dir: vec3.fromValues(1, 0, 0) },   // +X
-      { value: 4, dir: vec3.fromValues(-1, 0, 0) },  // -X
+      { value: 3, dir: vec3.fromValues(0, 1, 0) },   // +Y
+      { value: 4, dir: vec3.fromValues(0, -1, 0) },  // -Y
+      { value: 5, dir: vec3.fromValues(1, 0, 0) },   // +X
+      { value: 6, dir: vec3.fromValues(-1, 0, 0) },  // -X
       { value: 2, dir: vec3.fromValues(0, 0, 1) },   // +Z
-      { value: 5, dir: vec3.fromValues(0, 0, -1) }   // -Z
+      { value: 1, dir: vec3.fromValues(0, 0, -1) }   // -Z
     ];
 
     // (already a 4×4, but we use only the 3×3 upper-left part)
