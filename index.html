@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="utf-8">
-    <title>WebGL Engine</title>
-    <link rel="shortcut icon" href="favicon.ico" />
+    <title>Yahtzee: WebGL Edition!</title>
+    <link rel="shortcut icon" href="YahtzeeLogo.png" />
 </head>
 
 <body style="width: 100%; height: 100%; margin: 0; padding: 0">
@@ -30,7 +30,22 @@
     <!-- main canvas to be rendered -->
     <canvas id="glCanvas" style="width: 100%; height: 100%; display:block"></canvas>
 
+    <!-- text canvas to display UI elements -->
+    <canvas id="textCanvas"
+    style="position:absolute; left:0; top:0; width:100%; height:100%; pointer-events:none; display:block;">
+    </canvas>
 
+    <script>
+    const gameCanvas = document.getElementById("gameCanvas");
+    const textCanvas = document.getElementById("textCanvas");
+    const ctx = textCanvas.getContext("2d");
+
+    ctx.clearRect(0, 0, textCanvas.width, textCanvas.height);
+
+    ctx.font = "24px Arial";
+    ctx.fillStyle = "white";
+    ctx.fillText("Score: 100", 20, 30);
+    </script>
 
     <!-- This is a third party library for matrix math needed for WebGL calculations -->
     <!-- See http://glmatrix.net/ for documentation -->

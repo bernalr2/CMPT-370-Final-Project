@@ -15,8 +15,43 @@ class Game {
     this.mainCam = null;
     this.altCam = null
 
+    this.uiTexts = [
+    {
+        id: "player",
+        text: "Score: 0",
+        x: 10,
+        y: 15,
+        font: "12px Arial",
+        color: "blue"
+    },
+    {
+        id: "enemy",
+        text: "Score: 0",
+        x: 200,
+        y: 140,
+        font: "12px Arial",
+        color: "red"
+    },
+    {
+        id: "round",
+        text: "Round: 0",
+        x: 240,
+        y: 15,
+        font: "12px Arial",
+        color: "white"
+    },
+    {
+        id: "status",
+        text: "Null",
+        x: 90,
+        y: 70,
+        font: "24px Arial",
+        color: "white"
+    }
+    ];
   }
 
+  // Obtain the Dice Value based on the face that is most upright
   getDieValue(dieObject) {
 
     const worldUp = vec3.fromValues(0, 1, 0);
@@ -53,19 +88,13 @@ class Game {
     return best.value;
   }
 
+  // Used for changing the camera perspective
   updateCamera(view){
     vec3.copy(this.state.camera.position, view.position);
     vec3.copy(this.state.camera.front, view.front);
     vec3.copy(this.state.camera.up, view.up);
   }
 
-
-  // example - we can add our own custom method to our game and call it using 'this.customMethod()'
-  customMethod() {
-    console.log("Custom method!");
-  }
-
-  
   // example - create a collider on our object with various fields we might need (you will likely need to add/remove/edit how this works)
   createSphereCollider(object, radius, onCollide = null) {
     object.collider = {
@@ -109,6 +138,7 @@ class Game {
     console.log("NPC Dice roll results: ", rolled);
   }
 
+  // Print out the console to start the instructions of the modified Yahtzee
   startIntroduction() {
     console.log("Welcome to Yahtzee: WebGL Edition! To start rolling, hold the a button to spin the dice and hold the d button to stop rolling and get a score on the dice.");
     console.log("Once the dice stop moving, the values are scored on how many you achieved of each number.");
@@ -121,6 +151,40 @@ class Game {
     object.rotate('y', 0);
   }
 
+  /* UI Drawing Functions */
+  drawUI() {
+      ctx.clearRect(0, 0, textCanvas.width, textCanvas.height);
+
+      for (let t of this.uiTexts) {
+          ctx.font = t.font;
+          ctx.fillStyle = t.color;
+          ctx.fillText(t.text, t.x, t.y);
+      }
+  }
+
+  updateRound(value) {
+      this.uiTexts.find(t => t.id === "round").text = "Round: " + value;
+      this.drawUI();
+  }
+
+  updateScore(value) {
+      this.uiTexts.find(t => t.id === "player").text = "Player Score: " + value;
+      this.drawUI();
+  }
+
+  updateLives(value) {
+      this.uiTexts.find(t => t.id === "enemy").text = "Enemy Score: " + value;
+      this.drawUI();
+  }
+
+  updateStatus(value) {
+      this.uiTexts.find(t => t.id === "status").text = value;
+      this.drawUI();
+  }
+
+
+  /* MAIN GAME LOOP (onStart() and onUpdate()) STARTS HERE */
+
   // runs once on startup after the scene loads the objects
   async onStart() {
     console.log("On start");
@@ -130,28 +194,27 @@ class Game {
       e.preventDefault();
     }, false);
 
-
-    
-
+    // Define Camera States
     const cam = this.state.camera;
 
+    // Main Camera
     this.mainCam = {
       position: vec3.clone(cam.position),
       front:    vec3.clone(cam.front),
       up:       vec3.clone(cam.up),
     };
 
-    
+    // Alternate Camera
     this.altCam = {
       position: vec3.fromValues(0, 4, 0),  
       front:    vec3.fromValues(0, -1, 0),  
       up:       vec3.fromValues(0, 0, -1),  
     };
 
-
-    // example - set an object in onStart before starting our render loop!
-    //this.cube = getObject(this.state, "cube1");
-    //const otherCube = getObject(this.state, "cube2"); // we wont save this as instance var since we dont plan on using it in update
+    this.updateRound(1);
+    this.updateScore(0);
+    this.updateLives(0);
+    this.updateStatus("");
 
     // NEW - Set Dice and Floor into the Objects
     this.collidableObjects[0] = getObject(this.state, "Dice 1");
@@ -177,24 +240,13 @@ class Game {
       switch (e.key) {
         // Spin the Dice
         case "a":
-          //this.cube.translate(vec3.fromValues(0.5, 0, 0));
-          /*this.collidableObjects[0].rotate('x', 5.0);
-          this.collidableObjects[1].rotate('x', 5.0);
-          this.collidableObjects[2].rotate('x', 5.0);
-          this.collidableObjects[3].rotate('x', 5.0);
-          this.collidableObjects[4].rotate('x', 5.0);
-
-          this.collidableObjects[0].rotate('y', 5.0);
-          this.collidableObjects[1].rotate('y', 5.0);
-          this.collidableObjects[2].rotate('y', 5.0);
-          this.collidableObjects[3].rotate('y', 5.0);
-          this.collidableObjects[4].rotate('y', 5.0);*/
           break;
         
         // Drop the Dice
         case "d":
           //this.cube.translate(vec3.fromValues(-0.5, 0, 0));
           break;
+
         // Change Camera Perspective
         case "p":
           this.isFirstPerson = !(this.isFirstPerson);
@@ -211,51 +263,14 @@ class Game {
       }
     });
 
-    this.customMethod(); // calling our custom method! (we could put spawning logic, collision logic etc in there ;) )
-
+    // Start Game Instructions in Console Log
     this.startIntroduction();
 
-    // example: spawn some stuff before the scene starts
-    // for (let i = 0; i < 10; i++) {
-    //     for (let j = 0; j < 10; j++) {
-    //         for (let k = 0; k < 10; k++) {
-    //             spawnObject({
-    //                 name: `new-Object${i}${j}${k}`,
-    //                 type: "cube",
-    //                 material: {
-    //                     diffuse: randomVec3(0, 1)
-    //                 },
-    //                 position: vec3.fromValues(4 - i, 5 - j, 10 - k),
-    //                 scale: vec3.fromValues(0.5, 0.5, 0.5)
-    //             }, this.state);
-    //         }
-    //     }
-    // }
-
-    // example: spawn in objects, set constantRotate to true for them (used below) and give them a collider
-    //   for (let i = 0; i < 2; i++) {
-    //     let tempObject = await spawnObject({
-    //       name: `new-Object${i}`,
-    //       type: "cube",
-    //       material: {
-    //         diffuse: randomVec3(0, 1)
-    //       },
-    //       position: vec3.fromValues(4 - i, 0, 0),
-    //       scale: vec3.fromValues(0.5, 0.5, 0.5)
-    //     }, this.state);
-
-
-    //     tempObject.constantRotate = true;         // lets add a flag so we can access it later
-    //     this.spawnedObjects.push(tempObject);     // add these to a spawned objects list
-    //     this.collidableObjects.push(tempObject);  // say these can be collided into
-    //   }
   }
 
   // Runs once every frame non stop after the scene loads
   onUpdate(deltaTime) {
-    // TODO - Here we can add game logic, like moving game objects, detecting collisions, you name it. Examples of functions can be found in sceneFunctions
 
-    // example: Rotate a single object we defined in our start method
     // Added a Math.random() multiplier to make the objects rotate at different speeds
     this.collidableObjects[0].rotate('x', this.multiplier * deltaTime / 3600 * (Math.random() * 10));
     this.collidableObjects[1].rotate('x', this.multiplier * deltaTime / 3600 * (Math.random() * 10));
@@ -268,6 +283,7 @@ class Game {
     this.collidableObjects[2].rotate('y', this.multiplier * deltaTime / 3600 * (Math.random() * 10));
     this.collidableObjects[3].rotate('y', this.multiplier * deltaTime / 3600 * (Math.random() * 10));
     this.collidableObjects[4].rotate('y', this.multiplier * deltaTime / 3600 * (Math.random() * 10));
+
     document.addEventListener("keypress", (e) => {
       e.preventDefault();
 
@@ -285,8 +301,6 @@ class Game {
             this.multiplier = 0;
           }
           break;
-        // Change Camera Perspective
-        
       }
     });
     //console.log(this.multiplier);
@@ -325,47 +339,35 @@ class Game {
       console.log("The current round is: ", this.currentRound);
       console.log("The Player score is: ", this.playerScore);
       console.log("The NPC score is: ", this.NPCScore);
+      
+      // Update UIs
+      this.updateRound(this.currentRound);
+      this.updateScore(this.playerScore);
+      this.updateLives(this.NPCScore);
+
+      // Debug Logs
+      //console.log("The current round is: ", this.currentRound);
+      //console.log("The Player score is: ", this.playerScore);
+      //console.log("The NPC score is: ", this.NPCScore);
   }
 
   // Once the final round has been finished (Round 6)
   if (this.currentRound === 6) {
     if (this.playerScore > this.NPCScore) {
-      console.log("Player Wins!");
+      //console.log("Player Wins!");
+      this.updateStatus("Player Wins!");
     }
     else if (this.NPCScore > this.playerScore) {
-      console.log("NPC Wins!");
+      //console.log("NPC Wins!");
+      this.updateStatus("NPC Wins!");
     }
     else if (this.NPCScore === this.playerScore) {
-      console.log("Tied. No one wins.");
+      //console.log("Tied. No one wins.");
+      this.updateStatus("Nobody Wins!");
     }
     this.currentRound += 1;
 
-    // This marks the end of the gameplay loop
   };
-
-
-    //console.log(this.multiplier);
-    // this.cube.rotate('x', deltaTime * 0.5);
-
-    // example: Rotate all objects in the scene marked with a flag
-    // this.state.objects.forEach((object) => {
-    //   if (object.constantRotate) {
-    //     object.rotate('y', deltaTime * 0.5);
-    //   }
-    // });
-
-    // simulate a collision between the first spawned object and 'cube' 
-    // if (this.spawnedObjects[0].collidable) {
-    //     this.spawnedObjects[0].onCollide(this.cube);
-    // }
-
-    // example: Rotate all the 'spawned' objects in the scene
-    // this.spawnedObjects.forEach((object) => {
-    //     object.rotate('y', deltaTime * 0.5);
-    // });
-
-
-    // example - call our collision check method on our cube
-    // this.checkCollision(this.cube);
+    /* THIS MARKS THE END OF THE GAMEPLAY LOOP */
   }
 }
