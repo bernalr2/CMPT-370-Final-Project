@@ -61,15 +61,24 @@ async function main() {
         uniform mat4 uProjectionMatrix;
         uniform mat4 uViewMatrix;
         uniform mat4 uModelMatrix;
+        uniform mat4 normalMatrix;
+
         out vec3 oNormal;
         out vec2 oUV;
+        out vec3 oFragPosition;
 
         void main() {
+
             // Simply use this normal so no error is thrown
-            oNormal = normalize(uModelMatrix * vec4(aNormal, 0.0)).xyz;
+            // oNormal = normalize(uModelMatrix * vec4(aNormal, 0.0)).xyz;
+
+            oNormal = (normalMatrix * vec4(aNormal, 0.0)).xyz;
+            
             oUV = aUV;
             // Postion of the fragment in world space
             gl_Position = uProjectionMatrix * uViewMatrix * uModelMatrix * vec4(aPosition, 1.0);
+
+            oFragPosition = (uModelMatrix * vec4(aPosition, 1.0)).xyz;
         }
         `;
 
@@ -77,28 +86,61 @@ async function main() {
     `#version 300 es
         #define MAX_LIGHTS 20
         precision highp float;
+
         in vec2 oUV;
+        in vec3 oNormal;
+        in vec3 oFragPosition;
 
         struct pointLight {
           vec3 position;
           vec3 colour;
-          float strengh;
+          float strength;
         };
 
         uniform pointLight mainLight;
+
+        uniform vec3 ambientVal;
         uniform vec3 diffuseVal;
+        uniform vec3 specularVal;
+        uniform float nVal;
+        uniform float alphaVal;
+
+        uniform vec3 cameraPosition;
+
         uniform int samplerExists;
         uniform sampler2D uTexture;
 
         out vec4 fragColor;
+        
         void main() {
+            vec3 normal = normalize(oNormal);
+
+            // Ambient
+            vec3 ambient = ambientVal * mainLight.colour * mainLight.strength;
+            
+            //Diffuse
+            vec3 L = normalize(mainLight.position - oFragPosition);
+
+            // Can change the value from 0.0 - 1.0 if you wan some light on everything else. 
+            float NdotL = max(dot(normal, L), 0.0);
+
+            vec3 diffuse = diffuseVal * mainLight.colour * NdotL * mainLight.strength;
+
+            //Specular
+            vec3 V = normalize(cameraPosition - oFragPosition);
+            vec3 H = normalize(L + V);
+            float spec = pow(max(dot(H, normal), 0.0), nVal);
+
+            vec3 specular = specularVal * mainLight.colour * spec;
+
             if (samplerExists == 1) {
               vec3 textureColour = texture(uTexture, oUV).rgb;
-              fragColor = vec4(diffuseVal * textureColour, 1.0);
+              fragColor = vec4(ambient + diffuse * textureColour + specular, alphaVal);
             }
             else {
-              fragColor = vec4(diffuseVal, 1.0);
+              fragColor = vec4(ambient + diffuse + specular, alphaVal);
             }
+
         }
         `;
 
@@ -219,6 +261,22 @@ function drawScene(gl, deltaTime, state) {
   sorted.map((object) => {
     gl.useProgram(object.programInfo.program);
     {
+      //transparancy
+      /*
+      if (object.material.alpha < 1.0){
+        gl.disable(gl.DEPTH_TEST);
+        gl.enable(gl.BLEND);
+        gl.blendFunc(gl.ONE_MINUS_CONSTANT_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+      }
+      else{
+        gl.disable(gl.BLEND);
+        gl.depthMask(true);
+        gl.enable(gl.DEPTH_TEST);
+        gl.depthFunc(gl.LEQUAL);
+      }
+      */
+
+
       // Projection Matrix ....
       let projectionMatrix = mat4.create();
       let fovy = 90.0 * Math.PI / 180.0; // Vertical field of view in radians
@@ -275,6 +333,7 @@ function drawScene(gl, deltaTime, state) {
       gl.uniform3fv(object.programInfo.uniformLocations.ambientVal, object.material.ambient);
       gl.uniform3fv(object.programInfo.uniformLocations.specularVal, object.material.specular);
       gl.uniform1f(object.programInfo.uniformLocations.nVal, object.material.n);
+      gl.uniform1f(object.programInfo.uniformLocations.alphaVal, object.material.alpha);
 
       let mainLight = state.pointLights[0];
 

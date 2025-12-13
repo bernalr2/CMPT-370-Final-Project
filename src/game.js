@@ -334,6 +334,11 @@ class Game {
           this.playerScore += 1;
         }
       }
+ 
+      // Print out Results
+      console.log("The current round is: ", this.currentRound);
+      console.log("The Player score is: ", this.playerScore);
+      console.log("The NPC score is: ", this.NPCScore);
       
       // Update UIs
       this.updateRound(this.currentRound);
