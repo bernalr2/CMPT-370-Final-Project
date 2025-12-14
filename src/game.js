@@ -70,12 +70,12 @@ class Game {
 
     // Faces and their local directions
     const faces = [
-      { value: 1, dir: vec3.fromValues(0, 1, 0) },   // +Y
-      { value: 6, dir: vec3.fromValues(0, -1, 0) },  // -Y
-      { value: 3, dir: vec3.fromValues(1, 0, 0) },   // +X
-      { value: 4, dir: vec3.fromValues(-1, 0, 0) },  // -X
+      { value: 3, dir: vec3.fromValues(0, 1, 0) },   // +Y
+      { value: 4, dir: vec3.fromValues(0, -1, 0) },  // -Y
+      { value: 5, dir: vec3.fromValues(1, 0, 0) },   // +X
+      { value: 6, dir: vec3.fromValues(-1, 0, 0) },  // -X
       { value: 2, dir: vec3.fromValues(0, 0, 1) },   // +Z
-      { value: 5, dir: vec3.fromValues(0, 0, -1) }   // -Z
+      { value: 1, dir: vec3.fromValues(0, 0, -1) }   // -Z
     ];
 
     // (already a 4×4, but we use only the 3×3 upper-left part)
@@ -99,6 +99,27 @@ class Game {
 
     return best.value;
   }
+
+  // Snap the die so the detected face stays perfectly upright
+  snapDieToFace(dieObject, faceValue) {
+
+  const rotations = {
+    3: [ 0, 0, 0 ],                  // +Y
+    5: [ Math.PI, 0, 0 ],             // -Y
+    4: [ 0, 0, -Math.PI / 2 ],        // +X
+    6: [ 0, 0,  Math.PI / 2 ],        // -X
+    2: [ -Math.PI / 2, 0, 0 ],        // +Z
+    1: [  Math.PI / 2, 0, 0 ]         // -Z
+  };
+
+  const r = rotations[faceValue];
+  if (!r) return;
+
+  mat4.identity(dieObject.model.rotation);
+  mat4.rotateX(dieObject.model.rotation, dieObject.model.rotation, r[0]);
+  mat4.rotateY(dieObject.model.rotation, dieObject.model.rotation, r[1]);
+  mat4.rotateZ(dieObject.model.rotation, dieObject.model.rotation, r[2]);
+}
 
   // Used for changing the camera perspective
   updateCamera(view){
@@ -343,7 +364,9 @@ class Game {
       // Your dice are in collidableObjects[0] to collidableObjects[4]
       for (let i = 0; i < 5; i++) {
         results.push(this.getDieValue(this.collidableObjects[i]));
+        this.snapDieToFace(this.collidableObjects[i], results[i]);
       }
+
 
       // Log Player Roll results into an array
       console.log("Player Dice roll results: ", results);
