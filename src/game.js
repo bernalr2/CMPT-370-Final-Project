@@ -340,6 +340,7 @@ class Game {
           if (this.gameOver != true) {
             this.multiplier = 100000;
             this.canScore = true;
+            this.updateRound((this.currentRound + 1));
             this.updateStatus("Press D to stop rolling!");
             break;
           }
