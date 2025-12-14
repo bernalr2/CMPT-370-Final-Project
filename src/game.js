@@ -340,6 +340,7 @@ class Game {
           if (this.gameOver != true) {
             this.multiplier = 100000;
             this.canScore = true;
+            this.updateRound((this.currentRound + 1));
             this.updateStatus("Press D to stop rolling!");
             break;
           }
@@ -364,7 +365,20 @@ class Game {
       // Your dice are in collidableObjects[0] to collidableObjects[4]
       for (let i = 0; i < 5; i++) {
         results.push(this.getDieValue(this.collidableObjects[i]));
-        this.snapDieToFace(this.collidableObjects[i], results[i]);
+
+        // Dice Recalibration
+        // NOTE: Due to how the textures are wrapped along the dice, the values 4, 5, and 6 are bugged. This list of if statements act as a way to 'recalibrate' those specific values
+        let val = results[i];
+        if (val == 4) {
+          val = 5;
+        }
+        else if (val == 5) {
+          val = 6;
+        }
+        else if (val == 6) {
+          val = 4;
+        }
+        this.snapDieToFace(this.collidableObjects[i], val);
       }
 
 
