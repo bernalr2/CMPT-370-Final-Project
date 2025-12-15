@@ -105,7 +105,7 @@ async function main() {
         uniform float nVal;
         uniform float alphaVal;
 
-        uniform vec3 cameraPosition;
+        uniform vec3 uCameraPosition;
 
         uniform int samplerExists;
         uniform sampler2D uTexture;
@@ -122,12 +122,12 @@ async function main() {
             vec3 L = normalize(mainLight.position - oFragPosition);
 
             // Can change the value from 0.0 - 1.0 if you wan some light on everything else. 
-            float NdotL = max(dot(normal, L), 0.3);
+            float NdotL = max(dot(normal, L), 0.0);
 
             vec3 diffuse = diffuseVal * mainLight.colour * NdotL * mainLight.strength;
 
             //Specular
-            vec3 V = normalize(cameraPosition - oFragPosition);
+            vec3 V = normalize(uCameraPosition - oFragPosition);
             vec3 H = normalize(L + V);
             float spec = pow(max(dot(H, normal), 0.0), nVal);
 
@@ -257,16 +257,24 @@ function drawScene(gl, deltaTime, state) {
       >= vec3.distance(state.camera.position, vec3.fromValues(bCentroidFour[0], bCentroidFour[1], bCentroidFour[2])) ? -1 : 1;
   });
 
+  sorted.sort((a, b) => {
+    const ta = (a.material && a.material.alpha < 1.0) ? 1 : 0;
+    const tb = (b.material && b.material.alpha < 1.0) ? 1 : 0;
+    return ta - tb; // opaque first (0), transparent last (1)
+  });
+
+  console.log(sorted);
+
   // iterate over each object and render them
   sorted.map((object) => {
     gl.useProgram(object.programInfo.program);
     {
-      //transparancy
-      /*
-      if (object.material.alpha < 1.0){
-        gl.disable(gl.DEPTH_TEST);
+      // Transparacy Stuff
+
+      if (object.material.alpha < 1){
+        gl.depthMask(false);
         gl.enable(gl.BLEND);
-        gl.blendFunc(gl.ONE_MINUS_CONSTANT_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
       }
       else{
         gl.disable(gl.BLEND);
@@ -274,7 +282,6 @@ function drawScene(gl, deltaTime, state) {
         gl.enable(gl.DEPTH_TEST);
         gl.depthFunc(gl.LEQUAL);
       }
-      */
 
 
       // Projection Matrix ....
@@ -320,6 +327,7 @@ function drawScene(gl, deltaTime, state) {
       }
 
       object.model.modelMatrix = modelMatrix;
+      object.modelMatrix = modelMatrix;
       gl.uniformMatrix4fv(object.programInfo.uniformLocations.model, false, modelMatrix);
 
       // Normal Matrix ....
