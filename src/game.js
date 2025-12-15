@@ -272,14 +272,6 @@ class Game {
     for (let i = 0; i < 6; i++) {
       this.createSphereCollider(this.collidableObjects[i], 0.5);
     }
-    /*
-    this.createSphereCollider(this.collidableObjects[0], 0.5);
-    this.createSphereCollider(this.collidableObjects[1], 0.5);
-    this.createSphereCollider(this.collidableObjects[2], 0.5);
-    this.createSphereCollider(this.collidableObjects[3], 0.5);
-    this.createSphereCollider(this.collidableObjects[4], 0.5);
-    this.createSphereCollider(this.collidableObjects[5], 0.5);*/
-    //this.createSphereCollider(otherCube, 0.5);
 
     // example - setting up a key press event to move an object in the scene
     document.addEventListener("keypress", (e) => {
@@ -292,7 +284,6 @@ class Game {
         
         // Drop the Dice
         case "d":
-          //this.cube.translate(vec3.fromValues(-0.5, 0, 0));
           break;
 
         // Change Camera Perspective
@@ -340,6 +331,9 @@ class Game {
           if (this.gameOver != true) {
             this.multiplier = 100000;
             this.canScore = true;
+            for (let i = 0; i < 5; i++) {
+              this.collidableObjects[i].model.position[1] = 2.0;
+            }
             this.updateRound((this.currentRound + 1));
             this.updateStatus("Press D to stop rolling!");
             break;
@@ -347,10 +341,14 @@ class Game {
         // Slow the Dice
         case "d":
           this.multiplier = 0;
+          for (let i = 0; i < 5; i++) {
+              this.collidableObjects[i].model.position[1] = 0;
+          }
           break;
 
       }
     });
+    
     //console.log(this.multiplier);
 
     // When dice stop spinning, read values to check results
