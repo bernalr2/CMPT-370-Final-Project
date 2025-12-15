@@ -19,6 +19,16 @@ class Game {
     this.mainCam = null;
     this.altCam = null
 
+    // Sound Effects and Audio
+    this.sounds = {
+      roll: new Audio("assets/sounds/DiceRolling.wav"),
+      stop: new Audio("assets/sounds/DiceStopped.wav"),
+      win:  new Audio("assets/sounds/Victory.wav")
+    };
+
+    this.sounds.roll.loop = true;
+
+    // UI Elements
     this.uiTexts = [
     {
         id: "player",
@@ -64,11 +74,13 @@ class Game {
   }
 
   // Obtain the Dice Value based on the face that is most upright
-  getDieValue(dieObject) {
+  getDiceValue(diceObject) {
 
+    // Remember the WorldUp Vector
     const worldUp = vec3.fromValues(0, 1, 0);
 
     // Faces and their local directions
+    // NOTE: Values for 4, 5, and 6 do not work due to the wrapping of the texture. This is fixed with another calibration function
     const faces = [
       { value: 3, dir: vec3.fromValues(0, 1, 0) },   // +Y
       { value: 4, dir: vec3.fromValues(0, -1, 0) },  // -Y
@@ -78,19 +90,23 @@ class Game {
       { value: 1, dir: vec3.fromValues(0, 0, -1) }   // -Z
     ];
 
-    // (already a 4×4, but we use only the 3×3 upper-left part)
+    // Get the rotation and convert from a mat4 into a mat3 (Allows it to work better)
     const rot3 = mat3.create();
-    mat3.fromMat4(rot3, dieObject.model.rotation);
+    mat3.fromMat4(rot3, diceObject.model.rotation);
 
+    // Data for the best face that is the most upright
     let best = { value: null, dot: -999 };
 
     faces.forEach(face => {
+      // Calculate the vector transform and normalize
       let transformed = vec3.create();
       vec3.transformMat3(transformed, face.dir, rot3);
       vec3.normalize(transformed, transformed);
 
+      // Calculate the dot product between the transform and world vector
       let dot = vec3.dot(transformed, worldUp);
 
+      // The dot product value will check to see if a new best is found
       if (dot > best.dot) {
       best.value = face.value;
       best.dot = dot;
@@ -101,8 +117,10 @@ class Game {
   }
 
   // Snap the die so the detected face stays perfectly upright
-  snapDieToFace(dieObject, faceValue) {
+  snapDice(diceObject, faceValue) {
 
+  // Faces and their local directions
+  // NOTE: Same thing as the getDiceValue(diceObject), values for 4, 5, and 6 do not work due to the wrapping of the texture. This is fixed with another calibration function
   const rotations = {
     3: [ 0, 0, 0 ],                  // +Y
     5: [ Math.PI, 0, 0 ],             // -Y
@@ -112,13 +130,15 @@ class Game {
     1: [  Math.PI / 2, 0, 0 ]         // -Z
   };
 
+  // If value is invalid
   const r = rotations[faceValue];
   if (!r) return;
 
-  mat4.identity(dieObject.model.rotation);
-  mat4.rotateX(dieObject.model.rotation, dieObject.model.rotation, r[0]);
-  mat4.rotateY(dieObject.model.rotation, dieObject.model.rotation, r[1]);
-  mat4.rotateZ(dieObject.model.rotation, dieObject.model.rotation, r[2]);
+  // Snap the dice to a hard locked rotation
+  mat4.identity(diceObject.model.rotation);
+  mat4.rotateX(diceObject.model.rotation, diceObject.model.rotation, r[0]);
+  mat4.rotateY(diceObject.model.rotation, diceObject.model.rotation, r[1]);
+  mat4.rotateZ(diceObject.model.rotation, diceObject.model.rotation, r[2]);
 }
 
   // Used for changing the camera perspective
@@ -172,7 +192,7 @@ class Game {
     console.log("NPC Dice roll results: ", rolled);
   }
 
-  // Print out the console to start the instructions of the modified Yahtzee
+  // For the console log: prints out instructions to how this variation of Yahtzee works
   startIntroduction() {
     console.log("Welcome to Yahtzee: WebGL Edition! To start rolling, hold the a button to spin the dice and hold the d button to stop rolling and get a score on the dice.");
     console.log("Once the dice stop moving, the values are scored on how many you achieved of each number.");
@@ -185,7 +205,7 @@ class Game {
     object.rotate('y', 0);
   }
 
-  /* UI Drawing Functions */
+  /* UI Drawing Functions. The function name indicates what is being updated */
   drawUI() {
       ctx.clearRect(0, 0, textCanvas.width, textCanvas.height);
 
@@ -225,6 +245,22 @@ class Game {
     console.log("Hello!");
   }
 
+  /* Audio + Sound Effects Functions */
+  playSound(name) {
+    const s = this.sounds[name];
+    if (!s) return;
+
+    s.currentTime = 0;
+    s.play();
+  }
+
+  stopSound(name) {
+    const s = this.sounds[name];
+    if (!s) return;
+
+    s.pause();
+    s.currentTime = 0;
+  }
 
   /* MAIN GAME LOOP (onStart() and onUpdate()) STARTS HERE */
 
@@ -328,6 +364,7 @@ class Game {
       switch (e.key) {
         // Spin the Dice
         case "a":
+          this.playSound("roll");
           if (this.gameOver != true) {
             this.multiplier = 100000;
             this.canScore = true;
@@ -338,9 +375,11 @@ class Game {
             this.updateStatus("Press D to stop rolling!");
             break;
           }
-        // Slow the Dice
+        // Stop the Dice
         case "d":
           this.multiplier = 0;
+          this.stopSound("roll");
+          this.playSound("stop");
           for (let i = 0; i < 5; i++) {
               this.collidableObjects[i].model.position[1] = 0;
           }
@@ -348,7 +387,7 @@ class Game {
 
       }
     });
-    
+
     //console.log(this.multiplier);
 
     // When dice stop spinning, read values to check results
@@ -362,7 +401,9 @@ class Game {
 
       // Your dice are in collidableObjects[0] to collidableObjects[4]
       for (let i = 0; i < 5; i++) {
-        results.push(this.getDieValue(this.collidableObjects[i]));
+
+        // Add calculated rolls to the results
+        results.push(this.getDiceValue(this.collidableObjects[i]));
 
         // Dice Recalibration
         // NOTE: Due to how the textures are wrapped along the dice, the values 4, 5, and 6 are bugged. This list of if statements act as a way to 'recalibrate' those specific values
@@ -376,7 +417,7 @@ class Game {
         else if (val == 6) {
           val = 4;
         }
-        this.snapDieToFace(this.collidableObjects[i], val);
+        this.snapDice(this.collidableObjects[i], val);
       }
 
 
@@ -386,6 +427,7 @@ class Game {
       for (let i = 0; i < results.length; i++) {
         sum += results[i];
       }
+
       //console.log("The sum of the players numbers is: ", sum);
 
       // Increment the round
@@ -401,18 +443,19 @@ class Game {
         }
       }
  
-      // Print out Results
+      // Console Log Print the Results
       console.log("The current round is: ", this.currentRound);
       console.log("The Player score is: ", this.playerScore);
       console.log("The NPC score is: ", this.NPCScore);
       
-      // Update UIs
+      // Update all UI Elements
       this.updateRound(this.currentRound);
       this.updateScore(this.playerScore);
       this.updateLives(this.NPCScore);
       this.updateMessage("This round: Player scored " + this.playerCounter + " while NPC scored " + this.NPCCounter);
       this.updateStatus("Press A to start rolling!");
 
+      // Refresh the points for the Player and NPC Counted this round
       this.playerCounter = 0;
       this.NPCCounter = 0;
 
@@ -424,21 +467,34 @@ class Game {
 
   // Once the final round has been finished (Round 6)
   if (this.currentRound === 6) {
+
+    // Reset message to provide a small delay
+    let message = ""; 
+
     if (this.playerScore > this.NPCScore) {
       //console.log("Player Wins!");
-      this.updateStatus("Player Wins!");
+      this.updateStatus("");
+      message = "Player Wins!";
     }
     else if (this.NPCScore > this.playerScore) {
       //console.log("NPC Wins!");
-      this.updateStatus("NPC Wins!");
+      this.updateStatus("");
+      message = "NPC Wins!";
     }
     else if (this.NPCScore === this.playerScore) {
       //console.log("Tied. No one wins.");
-      this.updateStatus("Nobody Wins!");
+      this.updateStatus("");
+      message = "Nobody Wins!";
     }
-    this.currentRound += 1;
-    this.updateMessage("Press R to restart game!");
-    this.gameOver = true;
+
+    // Delay the sound effect and message until the reset
+    setTimeout(() => {
+      this.currentRound += 1;
+      this.updateMessage("Press R to restart game!");
+      this.gameOver = true;
+      this.playSound("win");
+      this.updateStatus(message);
+    }, 1000);
 
   };
     /* THIS MARKS THE END OF THE GAMEPLAY LOOP */
