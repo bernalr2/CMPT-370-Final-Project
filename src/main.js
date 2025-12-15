@@ -263,7 +263,7 @@ function drawScene(gl, deltaTime, state) {
     return ta - tb; // opaque first (0), transparent last (1)
   });
 
-  console.log(sorted);
+  //console.log(sorted);
 
   // iterate over each object and render them
   sorted.map((object) => {
