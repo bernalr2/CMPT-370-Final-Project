@@ -17,50 +17,16 @@ class Game {
     // Help for camera logic
     this.isFirstPerson = true;
     this.mainCam = null;
-    this.altCam = null
+    this.altCam = null;
 
-    this.uiTexts = [
-    {
-        id: "player",
-        text: "Score: 0",
-        x: 10,
-        y: 15,
-        font: "12px Arial",
-        color: "blue"
-    },
-    {
-        id: "enemy",
-        text: "Score: 0",
-        x: 200,
-        y: 140,
-        font: "12px Arial",
-        color: "red"
-    },
-    {
-        id: "round",
-        text: "Round: 0",
-        x: 240,
-        y: 15,
-        font: "12px Arial",
-        color: "white"
-    },
-    {
-        id: "status",
-        text: "Null",
-        x: 90,
-        y: 70,
-        font: "12px Arial",
-        color: "white"
-    },
-    {
-        id: "message",
-        text: "Starting Game Now!",
-        x: 10,
-        y: 140,
-        font: "8px Arial",
-        color: "white"
+    this.ui = {
+      playerScore: null,
+      roundNumber: null,
+      buttonInfo: null,
+      gameState: null,
+      enemyScore: null
+      
     }
-    ];
   }
 
   // Obtain the Dice Value based on the face that is most upright
@@ -185,41 +151,6 @@ class Game {
     object.rotate('y', 0);
   }
 
-  /* UI Drawing Functions */
-  drawUI() {
-      ctx.clearRect(0, 0, textCanvas.width, textCanvas.height);
-
-      for (let t of this.uiTexts) {
-          ctx.font = t.font;
-          ctx.fillStyle = t.color;
-          ctx.fillText(t.text, t.x, t.y);
-      }
-  }
-
-  updateRound(value) {
-      this.uiTexts.find(t => t.id === "round").text = "Round: " + value;
-      this.drawUI();
-  }
-
-  updateScore(value) {
-      this.uiTexts.find(t => t.id === "player").text = "Player Score: " + value;
-      this.drawUI();
-  }
-
-  updateLives(value) {
-      this.uiTexts.find(t => t.id === "enemy").text = "Enemy Score: " + value;
-      this.drawUI();
-  }
-
-  updateStatus(value) {
-      this.uiTexts.find(t => t.id === "status").text = value;
-      this.drawUI();
-  }
-
-  updateMessage(value) {
-    this.uiTexts.find(t => t.id === "message").text = value;
-    this.drawUI();
-  }
 
   doSomething() {
     console.log("Hello!");
@@ -254,11 +185,20 @@ class Game {
       up:       vec3.fromValues(0, 0, -1),  
     };
 
-    this.updateRound(1);
-    this.updateScore(0);
-    this.updateLives(0);
-    this.updateStatus("Press A to start rolling!");
-    this.updateMessage("Starting Game Now!");
+    this.ui.playerScore = document.getElementById("playerScore");
+    this.ui.playerScore.innerHTML = "Player Score: " + this.playerScore.toString();
+
+    this.ui.roundNumber = document.getElementById("roundNumber");
+    this.ui.roundNumber.innerHTML = "Round: " + this.currentRound.toString();
+
+    this.ui.buttonInfo = document.getElementById("buttonGuide");
+    this.ui.buttonInfo.innerHTML = "Press A to roll the dice!"
+
+    this.ui.gameState = document.getElementById("gameState");
+    this.ui.gameState.innerHTML = "Starting game!"
+
+    this.ui.enemyScore = document.getElementById("enemyScore");
+    this.ui.enemyScore.innerHTML = "Enemy Score: " + this.NPCScore.toString();
 
     // Set Dice and Floor into the Collidable Objects Array
     this.collidableObjects[0] = getObject(this.state, "Dice 1");
@@ -329,13 +269,16 @@ class Game {
         // Spin the Dice
         case "a":
           if (this.gameOver != true) {
-            this.multiplier = 100000;
+            this.multiplier = 10000;
             this.canScore = true;
             for (let i = 0; i < 5; i++) {
               this.collidableObjects[i].model.position[1] = 2.0;
             }
-            this.updateRound((this.currentRound + 1));
-            this.updateStatus("Press D to stop rolling!");
+            //this.updateRound((this.currentRound + 1));
+            
+            //this.updateStatus("Press D to stop rolling!");
+            this.ui.buttonInfo.innerHTML = "Press D to stop rolling the dice!";
+            
             break;
           }
         // Slow the Dice
@@ -407,11 +350,18 @@ class Game {
       console.log("The NPC score is: ", this.NPCScore);
       
       // Update UIs
+      /*
       this.updateRound(this.currentRound);
       this.updateScore(this.playerScore);
       this.updateLives(this.NPCScore);
       this.updateMessage("This round: Player scored " + this.playerCounter + " while NPC scored " + this.NPCCounter);
       this.updateStatus("Press A to start rolling!");
+      */
+     this.ui.playerScore.innerHTML = "Player Score: " + this.playerScore.toString();
+     this.ui.roundNumber.innerHTML = "Round: " + this.currentRound.toString();
+     this.ui.buttonInfo.innerHTML = "Press A to start roll the dice!";
+     this.ui.gameState.innerHTML = "This round: You scored " + this.playerCounter.toString() + " while NPC scored " + this.NPCCounter.toString();
+     this.ui.enemyScore.innerHTML  = "Enemy Score: " + this.NPCScore.toString();
 
       this.playerCounter = 0;
       this.NPCCounter = 0;
@@ -426,18 +376,22 @@ class Game {
   if (this.currentRound === 6) {
     if (this.playerScore > this.NPCScore) {
       //console.log("Player Wins!");
-      this.updateStatus("Player Wins!");
+      this.ui.buttonInfo.innerHTML = "You WIN!"
+      this.ui.gameState.innerHTML = "Press R to restart!"
+      
     }
     else if (this.NPCScore > this.playerScore) {
       //console.log("NPC Wins!");
-      this.updateStatus("NPC Wins!");
+      this.ui.buttonInfo.innerHTML = "You LOST!"
+      this.ui.gameState.innerHTML = "Press R to restart!"
     }
     else if (this.NPCScore === this.playerScore) {
       //console.log("Tied. No one wins.");
-      this.updateStatus("Nobody Wins!");
+      this.ui.buttonInfo.innerHTML = "This game is a draw"
+      this.ui.gameState.innerHTML = "Press R to restart!"
     }
     this.currentRound += 1;
-    this.updateMessage("Press R to restart game!");
+    //this.updateMessage("Press R to restart game!");
     this.gameOver = true;
 
   };
