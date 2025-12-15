@@ -51,12 +51,12 @@ class Game {
     // Faces and their local directions
     // NOTE: Values for 4, 5, and 6 do not work due to the wrapping of the texture. This is fixed with another calibration function
     const faces = [
-      { value: 3, dir: vec3.fromValues(0, 1, 0) },   // +Y
-      { value: 4, dir: vec3.fromValues(0, -1, 0) },  // -Y
-      { value: 5, dir: vec3.fromValues(1, 0, 0) },   // +X
-      { value: 6, dir: vec3.fromValues(-1, 0, 0) },  // -X
-      { value: 2, dir: vec3.fromValues(0, 0, 1) },   // +Z
-      { value: 1, dir: vec3.fromValues(0, 0, -1) }   // -Z
+      { value: 1, dir: vec3.fromValues(0, 0, -1) }, // -z
+      { value: 2, dir: vec3.fromValues(0, 0, 1) },  // -z
+      { value: 3, dir: vec3.fromValues(0, 1, 0) },  // +y
+      { value: 4, dir: vec3.fromValues(0, -1, 0) }, // -y
+      { value: 5, dir: vec3.fromValues(1, 0, 0) },  // +x
+      { value: 6, dir: vec3.fromValues(-1, 0, 0) }, // -x
     ];
 
     // Get the rotation and convert from a mat4 into a mat3 (Allows it to work better)
@@ -91,12 +91,12 @@ class Game {
   // Faces and their local directions
   // NOTE: Same thing as the getDiceValue(diceObject), values for 4, 5, and 6 do not work due to the wrapping of the texture. This is fixed with another calibration function
   const rotations = {
-    3: [ 0, 0, 0 ],                  // +Y
-    5: [ Math.PI, 0, 0 ],             // -Y
-    4: [ 0, 0, -Math.PI / 2 ],        // +X
-    6: [ 0, 0,  Math.PI / 2 ],        // -X
-    2: [ -Math.PI / 2, 0, 0 ],        // +Z
-    1: [  Math.PI / 2, 0, 0 ]         // -Z
+    1: [  Math.PI / 2, 0, 0 ], // -z
+    2: [ -Math.PI / 2, 0, 0 ], // +z
+    3: [ 0, 0, 0 ],            // +y
+    4: [ 0, 0, -Math.PI / 2 ], // +x
+    5: [ Math.PI, 0, 0 ],      // -y
+    6: [ 0, 0,  Math.PI / 2 ]  // -x
   };
 
   // If value is invalid
