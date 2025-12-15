@@ -30,22 +30,30 @@
     <!-- main canvas to be rendered -->
     <canvas id="glCanvas" style="width: 100%; height: 100%; display:block"></canvas>
 
+    <div id="overlay" style="position:absolute; top: 0; left: 0; width: 100%; height: 10%; text-align: left; pointer-events: none;">
+        <div style="font-size: 45px; color: blue;"><span id="playerScore"></span></div>
+    </div>
+
+    <div id="overlay" style="position:absolute; top: 0; left: 0; width: 100%; height: 10%; text-align: right; pointer-events: none;">
+        <div style="font-size: 45px; color: white;"><span id="roundNumber"></span></div>
+    </div>
+
+    <div id="overlay" style="position:absolute; top: 0; left: 0; width: 100%; height: 10%; text-align: center; pointer-events: none;">
+        <div style="font-size: 45px; color: white;"><span id="buttonGuide"></span></div>
+    </div>
+
+    <div id="overlay" style="position:absolute; bottom: 0; left: 0; width: 100%; height: 10%; text-align: left; pointer-events: none;">
+        <div style="font-size: 45px; color: white;"><span id="gameState"></span></div>
+    </div>
+
+    <div id="overlay" style="position:absolute; bottom: 0; left: 0; width: 100%; height: 10%; text-align: right; pointer-events: none;">
+        <div style="font-size: 45px; color: red;"><span id="enemyScore"></span></div>
+    </div>
+
     <!-- text canvas to display UI elements -->
     <canvas id="textCanvas"
     style="position:absolute; left:0; top:0; width:100%; height:100%; pointer-events:none; display:block;">
     </canvas>
-
-    <script>
-    const gameCanvas = document.getElementById("gameCanvas");
-    const textCanvas = document.getElementById("textCanvas");
-    const ctx = textCanvas.getContext("2d");
-
-    ctx.clearRect(0, 0, textCanvas.width, textCanvas.height);
-
-    ctx.font = "24px Arial";
-    ctx.fillStyle = "white";
-    ctx.fillText("Score: 100", 20, 30);
-    </script>
 
     <!-- This is a third party library for matrix math needed for WebGL calculations -->
     <!-- See http://glmatrix.net/ for documentation -->
