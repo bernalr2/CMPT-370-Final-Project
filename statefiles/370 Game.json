@@ -1,1 +1,1358 @@
-{"objects":[{"name":"Table Top","material":{"diffuse":[0.1568627506494522,0.08627451211214066,0.003921568859368563],"ambient":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"specular":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"n":32,"alpha":1,"shaderType":2,"diffuseTexture":{"texture":{},"name":"plywood.jpg"},"normalTexture":{"texture":{},"name":"defaultNormal.jpg"}},"type":"cube","position":[0,-1,0],"scale":[16,1,16],"rotation":[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],"rotationEulers":{"x":0,"y":0,"z":0},"parent":null,"model":null},{"name":"NPC Head","material":{"diffuse":[0.800000011920929,0.6784313917160034,0.6784313917160034],"ambient":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"specular":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"n":12,"alpha":1,"shaderType":2,"diffuseTexture":{"texture":{},"name":"Skin Texture.jpg"},"normalTexture":{"texture":{},"name":"defaultNormal.jpg"}},"type":"cube","position":[0,2,-7],"scale":[4,4,4],"rotation":[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],"rotationEulers":{"x":0,"y":0,"z":0},"parent":null,"model":null},{"name":"NPC Body","material":{"diffuse":[0,0.08627451211214066,0.5215686559677124],"ambient":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"specular":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"n":12,"alpha":1,"shaderType":2,"diffuseTexture":{"texture":{},"name":"Die_Die_base_Normal.png"},"normalTexture":{"texture":{},"name":"defaultNormal.jpg"}},"type":"cube","position":[0,-1,0],"scale":[0.699999988079071,3,0.699999988079071],"rotation":[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],"rotationEulers":{"x":0,"y":0,"z":0},"parent":"NPC Head","model":null},{"name":"NPC Arm Left","material":{"diffuse":[0,0.27843138575553894,0.4000000059604645],"ambient":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"specular":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"n":12,"alpha":1,"shaderType":0,"diffuseTexture":{"texture":{},"name":"Die_Die_base_Normal.png"},"normalTexture":{"texture":{},"name":"defaultNormal.jpg"}},"type":"cube","position":[-0.3700000047683716,0.07999999821186066,0],"scale":[0.5,0.44999998807907104,0.5],"rotation":[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],"rotationEulers":{"x":0,"y":0,"z":0},"parent":"NPC Body","model":null},{"name":"NPC Arm Right","material":{"diffuse":[0,0.27843138575553894,0.4000000059604645],"ambient":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"specular":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"n":12,"alpha":1,"shaderType":0,"diffuseTexture":{"texture":{},"name":"Die_Die_base_Normal.png"},"normalTexture":{"texture":{},"name":"defaultNormal.jpg"}},"type":"cube","position":[0.3700000047683716,0.07999999821186066,0],"scale":[0.5,0.44999998807907104,0.5],"rotation":[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],"rotationEulers":{"x":0,"y":0,"z":0},"parent":"NPC Body","model":null},{"name":"Cup","material":{"diffuse":[1,1,1],"ambient":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"specular":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"n":32,"alpha":0.4,"shaderType":3,"diffuseTexture":{"texture":{},"name":"scratch.png"},"normalTexture":{"texture":{},"name":"defaultNormal.jpg"}},"type":"mesh","position":[3,0,2],"scale":[10,10,10],"rotation":[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],"rotationEulers":{"x":0,"y":0,"z":0},"parent":null,"model":null,"fileName":"Glass_Cup.obj"},{"name":"Notepad","material":{"diffuse":[0.5,0.5,0.5],"ambient":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"specular":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"n":12,"alpha":1,"shaderType":1,"diffuseTexture":{"texture":{},"name":"scratch.png"},"normalTexture":{"texture":{},"name":"defaultNormal.jpg"}},"type":"mesh","position":[-2,-7,1],"scale":[0.25,0.25,0.25],"rotation":[-0.9999999403953552,0,-1.2246467202362698e-16,0,1.2246467202362698e-16,3.422854177870249e-8,-0.9999999403953552,0,0,-0.9999999403953552,3.422854177870249e-8,0,0,0,0,1],"rotationEulers":{"x":90,"y":180,"z":0},"parent":null,"model":null,"fileName":"libreta_UV_Bn.obj"},{"name":"Player","material":{"diffuse":[0.5,0.5,0.5],"ambient":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"specular":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"n":12,"alpha":0.48,"shaderType":2,"diffuseTexture":{"texture":{},"name":"BoneTexture.jpg"},"normalTexture":{"texture":{},"name":"Die_Die_base_Normal.png"}},"type":"mesh","position":[0,0,7],"scale":[1,1,1],"rotation":[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],"rotationEulers":{"x":0,"y":0,"z":0},"parent":null,"model":null,"fileName":"Creeper.obj"},{"name":"Dice 1","material":{"diffuse":[0.5,0.5,0.5],"ambient":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"specular":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"n":32,"alpha":1.0,"shaderType":2, "atlasFlag": "dice_atlas", "diffuseTexture":{"texture":{},"name":"Die_Die_base_BaseColor.png"},"normalTexture":{"texture":{},"name":"defaultNormal.jpg"}},"type":"cube","position":[-2,0,0],"scale":[1,1,1],"rotation":[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],"rotationEulers":{"x":0,"y":0,"z":0},"parent":null,"model":null},{"name":"Dice 2","material":{"diffuse":[0.5,0.5,0.5],"ambient":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"specular":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"n":32,"alpha":1,"shaderType":2,  "atlasFlag": "dice_atlas", "diffuseTexture":{"texture":{},"name":"Die_Die_base_BaseColor.png"},"normalTexture":{"texture":{},"name":"defaultNormal.jpg"}},"type":"cube","position":[-1,0,0],"scale":[1,1,1],"rotation":[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],"rotationEulers":{"x":0,"y":0,"z":0},"parent":null,"model":null},{"name":"Dice 3","material":{"diffuse":[0.5,0.5,0.5],"ambient":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"specular":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"n":32,"alpha":1,"shaderType":2,  "atlasFlag": "dice_atlas", "diffuseTexture":{"texture":{},"name":"Die_Die_base_BaseColor.png"},"normalTexture":{"texture":{},"name":"defaultNormal.jpg"}},"type":"cube","position":[0,0,0],"scale":[1,1,1],"rotation":[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],"rotationEulers":{"x":0,"y":0,"z":0},"parent":null,"model":null},{"name":"Dice 4","material":{"diffuse":[0.5,0.5,0.5],"ambient":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"specular":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"n":32,"alpha":1,"shaderType":2, "atlasFlag": "dice_atlas", "diffuseTexture":{"texture":{},"name":"Die_Die_base_BaseColor.png"},"normalTexture":{"texture":{},"name":"defaultNormal.jpg"}},"type":"cube","position":[1,0,0],"scale":[1,1,1],"rotation":[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],"rotationEulers":{"x":0,"y":0,"z":0},"parent":null,"model":null},{"name":"Dice 5","material":{"diffuse":[0.5,0.5,0.5],"ambient":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"specular":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"n":32,"alpha":1,"shaderType":2, "atlasFlag": "dice_atlas", "diffuseTexture":{"texture":{},"name":"Die_Die_base_BaseColor.png"},"normalTexture":{"texture":{},"name":"defaultNormal.jpg"}},"type":"cube","position":[2,0,0],"scale":[1,1,1],"rotation":[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],"rotationEulers":{"x":0,"y":0,"z":0},"parent":null,"model":null},{"name":"Wall 1","material":{"diffuse":[0.35686275362968445,0.26274511218070984,0.003921568859368563],"ambient":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"specular":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"n":12,"alpha":1,"shaderType":2,"diffuseTexture":{"texture":{},"name":"plywood.jpg"},"normalTexture":{"texture":{},"name":"defaultNormal.jpg"}},"type":"cube","position":[-15,0,0],"scale":[1,40,80],"rotation":[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],"rotationEulers":{"x":0,"y":0,"z":0},"parent":null,"model":null},{"name":"Wall 2","material":{"diffuse":[0.35686275362968445,0.26274511218070984,0.003921568859368563],"ambient":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"specular":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"n":12,"alpha":1,"shaderType":2,"diffuseTexture":{"texture":{},"name":"plywood.jpg"},"normalTexture":{"texture":{},"name":"defaultNormal.jpg"}},"type":"cube","position":[15,0,0],"scale":[1,40,80],"rotation":[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],"rotationEulers":{"x":0,"y":0,"z":0},"parent":null,"model":null},{"name":"Wall 3","material":{"diffuse":[0.35686275362968445,0.26274511218070984,0.003921568859368563],"ambient":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"specular":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"n":12,"alpha":1,"shaderType":2,"diffuseTexture":{"texture":{},"name":"plywood.jpg"},"normalTexture":{"texture":{},"name":"defaultNormal.jpg"}},"type":"cube","position":[0,0,-20],"scale":[60,40,1],"rotation":[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],"rotationEulers":{"x":0,"y":0,"z":0},"parent":null,"model":null},{"name":"Wall 4","material":{"diffuse":[0.35686275362968445,0.26274511218070984,0.003921568859368563],"ambient":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"specular":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"n":12,"alpha":1,"shaderType":2,"diffuseTexture":{"texture":{},"name":"plywood.jpg"},"normalTexture":{"texture":{},"name":"defaultNormal.jpg"}},"type":"cube","position":[0,0,20],"scale":[60,40,1],"rotation":[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],"rotationEulers":{"x":0,"y":0,"z":0},"parent":null,"model":null},{"name":"Floor","material":{"diffuse":[0.2705882489681244,0.2705882489681244,0.2705882489681244],"ambient":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"specular":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"n":12,"alpha":1,"shaderType":2,"diffuseTexture":{"texture":{},"name":"Die_Die_base_Normal.png"},"normalTexture":{"texture":{},"name":"defaultNormal.jpg"}},"type":"cube","position":[0,-10,0],"scale":[60,1,80],"rotation":[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],"rotationEulers":{"x":0,"y":0,"z":0},"parent":null,"model":null},{"name":"Roof","material":{"diffuse":[0.29019609093666077,0.29019609093666077,0.29019609093666077],"ambient":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"specular":[0.10000000149011612,0.10000000149011612,0.10000000149011612],"n":12,"alpha":1,"shaderType":2,"diffuseTexture":{"texture":{},"name":"ceiling_tile_border_04 (1).png"},"normalTexture":{"texture":{},"name":"defaultNormal.jpg"}},"type":"cube","position":[0,10,0],"scale":[60,1,80],"rotation":[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],"rotationEulers":{"x":0,"y":0,"z":0},"parent":null,"model":null}],"pointLights":[{"name":"test-light-0","colour":[0.5,0.5,0.5],"position":[0,2,0],"strength":1,"quadratic":0.032,"linear":0.09,"constant":1,"nearPlane":0.1,"farPlane":1000,"shadow":false}],"skyBoxOn":false,"skyBoxPath":"defaultSkybox","sceneSettings":{"backgroundColor":[0,0,0]},"camera":{"name":"Camera","position":[0.2525581419467926,1.926658272743225,5.625027656555176],"front":[-0.009207322262227535,-0.29496416449546814,-0.9554639458656311],"up":[0,1,0],"yaw":90,"pitch":0,"roll":0,"viewMatrix":{"0":0.9999535083770752,"1":-0.0028528631664812565,"2":0.009207322262227535,"3":0,"4":0.000010104827197210398,"5":0.9555083513259888,"6":0.29496416449546814,"7":0,"8":-0.009639165364205837,"9":-0.29495036602020264,"10":0.9554639458656311,"11":0,"12":-0.19834530353546143,"13":-0.18111349642276764,"14":-5.945131778717041,"15":1},"moveSpeed":5,"sensitivity":0.009}}
+{
+    "objects": [
+        {
+            "name": "Table Top",
+            "material": {
+                "diffuse": [
+                    0.1568627506494522,
+                    0.08627451211214066,
+                    0.003921568859368563
+                ],
+                "ambient": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "specular": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "n": 32,
+                "alpha": 1,
+                "shaderType": 2,
+                "diffuseTexture": {
+                    "texture": {},
+                    "name": "plywood.jpg"
+                },
+                "normalTexture": {
+                    "texture": {},
+                    "name": "defaultNormal.jpg"
+                }
+            },
+            "type": "cube",
+            "position": [
+                0,
+                -1,
+                0
+            ],
+            "scale": [
+                16,
+                1,
+                16
+            ],
+            "rotation": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+            ],
+            "rotationEulers": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "parent": null,
+            "model": null
+        },
+        {
+            "name": "NPC Head",
+            "material": {
+                "diffuse": [
+                    0.800000011920929,
+                    0.6784313917160034,
+                    0.6784313917160034
+                ],
+                "ambient": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "specular": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "n": 1,
+                "alpha": 1,
+                "shaderType": 3,
+                "diffuseTexture": {
+                    "texture": {},
+                    "name": "Skin Texture.jpg"
+                },
+                "normalTexture": {
+                    "texture": {},
+                    "name": "defaultNormal.jpg"
+                }
+            },
+            "type": "cube",
+            "position": [
+                0,
+                2,
+                -7
+            ],
+            "scale": [
+                4,
+                4,
+                4
+            ],
+            "rotation": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+            ],
+            "rotationEulers": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "parent": null,
+            "model": null
+        },
+        {
+            "name": "NPC Body",
+            "material": {
+                "diffuse": [
+                    0,
+                    0.08627451211214066,
+                    0.5215686559677124
+                ],
+                "ambient": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "specular": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "n": 12,
+                "alpha": 1,
+                "shaderType": 2,
+                "diffuseTexture": {
+                    "texture": {},
+                    "name": "Die_Die_base_Normal.png"
+                },
+                "normalTexture": {
+                    "texture": {},
+                    "name": "defaultNormal.jpg"
+                }
+            },
+            "type": "cube",
+            "position": [
+                0,
+                -1,
+                0
+            ],
+            "scale": [
+                0.699999988079071,
+                3,
+                0.699999988079071
+            ],
+            "rotation": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+            ],
+            "rotationEulers": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "parent": "NPC Head",
+            "model": null
+        },
+        {
+            "name": "NPC Arm Left",
+            "material": {
+                "diffuse": [
+                    0,
+                    0.27843138575553894,
+                    0.4000000059604645
+                ],
+                "ambient": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "specular": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "n": 12,
+                "alpha": 1,
+                "shaderType": 0,
+                "diffuseTexture": {
+                    "texture": {},
+                    "name": "Die_Die_base_Normal.png"
+                },
+                "normalTexture": {
+                    "texture": {},
+                    "name": "defaultNormal.jpg"
+                }
+            },
+            "type": "cube",
+            "position": [
+                -0.3700000047683716,
+                0.07999999821186066,
+                0
+            ],
+            "scale": [
+                0.5,
+                0.44999998807907104,
+                0.5
+            ],
+            "rotation": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+            ],
+            "rotationEulers": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "parent": "NPC Body",
+            "model": null
+        },
+        {
+            "name": "NPC Arm Right",
+            "material": {
+                "diffuse": [
+                    0,
+                    0.27843138575553894,
+                    0.4000000059604645
+                ],
+                "ambient": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "specular": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "n": 12,
+                "alpha": 1,
+                "shaderType": 0,
+                "diffuseTexture": {
+                    "texture": {},
+                    "name": "Die_Die_base_Normal.png"
+                },
+                "normalTexture": {
+                    "texture": {},
+                    "name": "defaultNormal.jpg"
+                }
+            },
+            "type": "cube",
+            "position": [
+                0.3700000047683716,
+                0.07999999821186066,
+                0
+            ],
+            "scale": [
+                0.5,
+                0.44999998807907104,
+                0.5
+            ],
+            "rotation": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+            ],
+            "rotationEulers": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "parent": "NPC Body",
+            "model": null
+        },
+        {
+            "name": "Cup",
+            "material": {
+                "diffuse": [
+                    1,
+                    1,
+                    1
+                ],
+                "ambient": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "specular": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "n": 32,
+                "alpha": 0.4,
+                "shaderType": 3,
+                "diffuseTexture": {
+                    "texture": {},
+                    "name": "scratch.png"
+                },
+                "normalTexture": {
+                    "texture": {},
+                    "name": "defaultNormal.jpg"
+                }
+            },
+            "type": "mesh",
+            "position": [
+                3,
+                0,
+                2
+            ],
+            "scale": [
+                10,
+                10,
+                10
+            ],
+            "rotation": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+            ],
+            "rotationEulers": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "parent": null,
+            "model": null,
+            "fileName": "Glass_Cup.obj"
+        },
+        {
+            "name": "Notepad",
+            "material": {
+                "diffuse": [
+                    0.5,
+                    0.5,
+                    0.5
+                ],
+                "ambient": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "specular": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "n": 12,
+                "alpha": 1,
+                "shaderType": 1,
+                "diffuseTexture": {
+                    "texture": {},
+                    "name": "scratch.png"
+                },
+                "normalTexture": {
+                    "texture": {},
+                    "name": "defaultNormal.jpg"
+                }
+            },
+            "type": "mesh",
+            "position": [
+                -2,
+                -7,
+                1
+            ],
+            "scale": [
+                0.25,
+                0.25,
+                0.25
+            ],
+            "rotation": [
+                -0.9999999403953552,
+                0,
+                -1.2246467202362698e-16,
+                0,
+                1.2246467202362698e-16,
+                3.422854177870249e-8,
+                -0.9999999403953552,
+                0,
+                0,
+                -0.9999999403953552,
+                3.422854177870249e-8,
+                0,
+                0,
+                0,
+                0,
+                1
+            ],
+            "rotationEulers": {
+                "x": 90,
+                "y": 180,
+                "z": 0
+            },
+            "parent": null,
+            "model": null,
+            "fileName": "libreta_UV_Bn.obj"
+        },
+        {
+            "name": "Player",
+            "material": {
+                "diffuse": [
+                    0.5,
+                    0.5,
+                    0.5
+                ],
+                "ambient": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "specular": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "n": 12,
+                "alpha": 0.48,
+                "shaderType": 2,
+                "diffuseTexture": {
+                    "texture": {},
+                    "name": "BoneTexture.jpg"
+                },
+                "normalTexture": {
+                    "texture": {},
+                    "name": "Die_Die_base_Normal.png"
+                }
+            },
+            "type": "mesh",
+            "position": [
+                0,
+                0,
+                7
+            ],
+            "scale": [
+                1,
+                1,
+                1
+            ],
+            "rotation": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+            ],
+            "rotationEulers": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "parent": null,
+            "model": null,
+            "fileName": "Creeper.obj"
+        },
+        {
+            "name": "Dice 1",
+            "material": {
+                "diffuse": [
+                    0.5,
+                    0.5,
+                    0.5
+                ],
+                "ambient": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "specular": [
+                    0.70000000149011612,
+                    0.70000000149011612,
+                    0.70000000149011612
+                ],
+                "n": 46,
+                "alpha": 1.0,
+                "shaderType": 2,
+                "atlasFlag": "dice_atlas",
+                "diffuseTexture": {
+                    "texture": {},
+                    "name": "Die_Die_base_BaseColor.png"
+                },
+                "normalTexture": {
+                    "texture": {},
+                    "name": "defaultNormal.jpg"
+                }
+            },
+            "type": "cube",
+            "position": [
+                -2,
+                0,
+                0
+            ],
+            "scale": [
+                1,
+                1,
+                1
+            ],
+            "rotation": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+            ],
+            "rotationEulers": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "parent": null,
+            "model": null
+        },
+        {
+            "name": "Dice 2",
+            "material": {
+                "diffuse": [
+                    0.5,
+                    0.5,
+                    0.5
+                ],
+                "ambient": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "specular": [
+                    0.70000000149011612,
+                    0.70000000149011612,
+                    0.70000000149011612
+                ],
+                "n": 46,
+                "alpha": 1,
+                "shaderType": 2,
+                "atlasFlag": "dice_atlas",
+                "diffuseTexture": {
+                    "texture": {},
+                    "name": "Die_Die_base_BaseColor.png"
+                },
+                "normalTexture": {
+                    "texture": {},
+                    "name": "defaultNormal.jpg"
+                }
+            },
+            "type": "cube",
+            "position": [
+                -1,
+                0,
+                0
+            ],
+            "scale": [
+                1,
+                1,
+                1
+            ],
+            "rotation": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+            ],
+            "rotationEulers": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "parent": null,
+            "model": null
+        },
+        {
+            "name": "Dice 3",
+            "material": {
+                "diffuse": [
+                    0.5,
+                    0.5,
+                    0.5
+                ],
+                "ambient": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "specular": [
+                    0.70000000149011612,
+                    0.70000000149011612,
+                    0.70000000149011612
+                ],
+                "n": 46,
+                "alpha": 1,
+                "shaderType": 2,
+                "atlasFlag": "dice_atlas",
+                "diffuseTexture": {
+                    "texture": {},
+                    "name": "Die_Die_base_BaseColor.png"
+                },
+                "normalTexture": {
+                    "texture": {},
+                    "name": "defaultNormal.jpg"
+                }
+            },
+            "type": "cube",
+            "position": [
+                0,
+                0,
+                0
+            ],
+            "scale": [
+                1,
+                1,
+                1
+            ],
+            "rotation": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+            ],
+            "rotationEulers": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "parent": null,
+            "model": null
+        },
+        {
+            "name": "Dice 4",
+            "material": {
+                "diffuse": [
+                    0.5,
+                    0.5,
+                    0.5
+                ],
+                "ambient": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "specular": [
+                    0.70000000149011612,
+                    0.70000000149011612,
+                    0.70000000149011612
+                ],
+                "n": 12,
+                "alpha": 1,
+                "shaderType": 2,
+                "atlasFlag": "dice_atlas",
+                "diffuseTexture": {
+                    "texture": {},
+                    "name": "Die_Die_base_BaseColor.png"
+                },
+                "normalTexture": {
+                    "texture": {},
+                    "name": "defaultNormal.jpg"
+                }
+            },
+            "type": "cube",
+            "position": [
+                1,
+                0,
+                0
+            ],
+            "scale": [
+                1,
+                1,
+                1
+            ],
+            "rotation": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+            ],
+            "rotationEulers": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "parent": null,
+            "model": null
+        },
+        {
+            "name": "Dice 5",
+            "material": {
+                "diffuse": [
+                    0.5,
+                    0.5,
+                    0.5
+                ],
+                "ambient": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "specular": [
+                    0.70000000149011612,
+                    0.70000000149011612,
+                    0.70000000149011612
+                ],
+                "n": 46,
+                "alpha": 1,
+                "shaderType": 2,
+                "atlasFlag": "dice_atlas",
+                "diffuseTexture": {
+                    "texture": {},
+                    "name": "Die_Die_base_BaseColor.png"
+                },
+                "normalTexture": {
+                    "texture": {},
+                    "name": "defaultNormal.jpg"
+                }
+            },
+            "type": "cube",
+            "position": [
+                2,
+                0,
+                0
+            ],
+            "scale": [
+                1,
+                1,
+                1
+            ],
+            "rotation": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+            ],
+            "rotationEulers": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "parent": null,
+            "model": null
+        },
+        {
+            "name": "Wall 1",
+            "material": {
+                "diffuse": [
+                    0.35686275362968445,
+                    0.26274511218070984,
+                    0.003921568859368563
+                ],
+                "ambient": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "specular": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "n": 4,
+                "alpha": 1,
+                "shaderType": 2,
+                "diffuseTexture": {
+                    "texture": {},
+                    "name": "plywood.jpg"
+                },
+                "normalTexture": {
+                    "texture": {},
+                    "name": "defaultNormal.jpg"
+                }
+            },
+            "type": "cube",
+            "position": [
+                -15,
+                0,
+                0
+            ],
+            "scale": [
+                1,
+                40,
+                80
+            ],
+            "rotation": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+            ],
+            "rotationEulers": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "parent": null,
+            "model": null
+        },
+        {
+            "name": "Wall 2",
+            "material": {
+                "diffuse": [
+                    0.35686275362968445,
+                    0.26274511218070984,
+                    0.003921568859368563
+                ],
+                "ambient": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "specular": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "n": 4,
+                "alpha": 1,
+                "shaderType": 2,
+                "diffuseTexture": {
+                    "texture": {},
+                    "name": "plywood.jpg"
+                },
+                "normalTexture": {
+                    "texture": {},
+                    "name": "defaultNormal.jpg"
+                }
+            },
+            "type": "cube",
+            "position": [
+                15,
+                0,
+                0
+            ],
+            "scale": [
+                1,
+                40,
+                80
+            ],
+            "rotation": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+            ],
+            "rotationEulers": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "parent": null,
+            "model": null
+        },
+        {
+            "name": "Wall 3",
+            "material": {
+                "diffuse": [
+                    0.35686275362968445,
+                    0.26274511218070984,
+                    0.003921568859368563
+                ],
+                "ambient": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "specular": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "n": 4,
+                "alpha": 1,
+                "shaderType": 2,
+                "diffuseTexture": {
+                    "texture": {},
+                    "name": "plywood.jpg"
+                },
+                "normalTexture": {
+                    "texture": {},
+                    "name": "defaultNormal.jpg"
+                }
+            },
+            "type": "cube",
+            "position": [
+                0,
+                0,
+                -20
+            ],
+            "scale": [
+                60,
+                40,
+                1
+            ],
+            "rotation": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+            ],
+            "rotationEulers": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "parent": null,
+            "model": null
+        },
+        {
+            "name": "Wall 4",
+            "material": {
+                "diffuse": [
+                    0.35686275362968445,
+                    0.26274511218070984,
+                    0.003921568859368563
+                ],
+                "ambient": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "specular": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "n": 4,
+                "alpha": 1,
+                "shaderType": 2,
+                "diffuseTexture": {
+                    "texture": {},
+                    "name": "plywood.jpg"
+                },
+                "normalTexture": {
+                    "texture": {},
+                    "name": "defaultNormal.jpg"
+                }
+            },
+            "type": "cube",
+            "position": [
+                0,
+                0,
+                20
+            ],
+            "scale": [
+                60,
+                40,
+                1
+            ],
+            "rotation": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+            ],
+            "rotationEulers": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "parent": null,
+            "model": null
+        },
+        {
+            "name": "Floor",
+            "material": {
+                "diffuse": [
+                    0.2705882489681244,
+                    0.2705882489681244,
+                    0.2705882489681244
+                ],
+                "ambient": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "specular": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "n": 32,
+                "alpha": 1,
+                "shaderType": 2,
+                "diffuseTexture": {
+                    "texture": {},
+                    "name": "Die_Die_base_Normal.png"
+                },
+                "normalTexture": {
+                    "texture": {},
+                    "name": "defaultNormal.jpg"
+                }
+            },
+            "type": "cube",
+            "position": [
+                0,
+                -10,
+                0
+            ],
+            "scale": [
+                60,
+                1,
+                80
+            ],
+            "rotation": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+            ],
+            "rotationEulers": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "parent": null,
+            "model": null
+        },
+        {
+            "name": "Roof",
+            "material": {
+                "diffuse": [
+                    0.29019609093666077,
+                    0.29019609093666077,
+                    0.29019609093666077
+                ],
+                "ambient": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "specular": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ],
+                "n": 16,
+                "alpha": 1,
+                "shaderType": 2,
+                "diffuseTexture": {
+                    "texture": {},
+                    "name": "ceiling_tile_border_04 (1).png"
+                },
+                "normalTexture": {
+                    "texture": {},
+                    "name": "defaultNormal.jpg"
+                }
+            },
+            "type": "cube",
+            "position": [
+                0,
+                10,
+                0
+            ],
+            "scale": [
+                60,
+                1,
+                80
+            ],
+            "rotation": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+            ],
+            "rotationEulers": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "parent": null,
+            "model": null
+        }
+    ],
+    "pointLights": [
+        {
+            "name": "test-light-0",
+            "colour": [
+                0.5,
+                0.5,
+                0.5
+            ],
+            "position": [
+                0,
+                2,
+                0
+            ],
+            "strength": 1,
+            "quadratic": 0.032,
+            "linear": 0.09,
+            "constant": 1,
+            "nearPlane": 0.1,
+            "farPlane": 1000,
+            "shadow": false
+        }
+        
+    ],
+    "skyBoxOn": false,
+    "skyBoxPath": "defaultSkybox",
+    "sceneSettings": {
+        "backgroundColor": [
+            0,
+            0,
+            0
+        ]
+    },
+    "camera": {
+        "name": "Camera",
+        "position": [
+            0.2525581419467926,
+            1.926658272743225,
+            5.625027656555176
+        ],
+        "front": [
+            -0.009207322262227535,
+            -0.29496416449546814,
+            -0.9554639458656311
+        ],
+        "up": [
+            0,
+            1,
+            0
+        ],
+        "yaw": 90,
+        "pitch": 0,
+        "roll": 0,
+        "viewMatrix": {
+            "0": 0.9999535083770752,
+            "1": -0.0028528631664812565,
+            "2": 0.009207322262227535,
+            "3": 0,
+            "4": 0.000010104827197210398,
+            "5": 0.9555083513259888,
+            "6": 0.29496416449546814,
+            "7": 0,
+            "8": -0.009639165364205837,
+            "9": -0.29495036602020264,
+            "10": 0.9554639458656311,
+            "11": 0,
+            "12": -0.19834530353546143,
+            "13": -0.18111349642276764,
+            "14": -5.945131778717041,
+            "15": 1
+        },
+        "moveSpeed": 5,
+        "sensitivity": 0.009
+    }
+}

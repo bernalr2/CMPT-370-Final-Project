@@ -36,8 +36,6 @@ class Game {
     };
 
     this.sounds.roll.loop = true;
-
-    
     
   }
   
@@ -223,6 +221,7 @@ class Game {
       up:       vec3.fromValues(0, 0, -1),  
     };
 
+    // Hooking Up  and Initializig UI
     this.ui.playerScore = document.getElementById("playerScore");
     this.ui.playerScore.innerHTML = "Player Score: " + this.playerScore.toString();
 
@@ -256,12 +255,27 @@ class Game {
       e.preventDefault();
 
       switch (e.key) {
-        // Spin the Dice
         case "a":
-          break;
-        
-        // Drop the Dice
+          this.playSound("roll");
+          if (this.gameOver != true) {
+            this.multiplier = 10000;
+            this.canScore = true;
+            for (let i = 0; i < 5; i++) {
+              this.collidableObjects[i].model.position[1] = 2.0;
+            }
+            
+            this.ui.buttonInfo.innerHTML = "Press D to stop rolling the dice!";
+            
+            break;
+          }
+        // Stop the Dice
         case "d":
+          this.multiplier = 0;
+          this.stopSound("roll");
+          this.playSound("stop");
+          for (let i = 0; i < 5; i++) {
+              this.collidableObjects[i].model.position[1] = 0;
+          }
           break;
 
         // Change Camera Perspective
@@ -299,39 +313,6 @@ class Game {
       this.collidableObjects[i].rotate('x', this.multiplier * deltaTime / 3600 * (Math.random() * 10));
       this.collidableObjects[i].rotate('y', this.multiplier * deltaTime / 3600 * (Math.random() * 10));
     }
-
-    document.addEventListener("keypress", (e) => {
-      e.preventDefault();
-
-      switch (e.key) {
-        // Spin the Dice
-        case "a":
-          this.playSound("roll");
-          if (this.gameOver != true) {
-            this.multiplier = 10000;
-            this.canScore = true;
-            for (let i = 0; i < 5; i++) {
-              this.collidableObjects[i].model.position[1] = 2.0;
-            }
-            
-            this.ui.buttonInfo.innerHTML = "Press D to stop rolling the dice!";
-            
-            break;
-          }
-        // Stop the Dice
-        case "d":
-          this.multiplier = 0;
-          this.stopSound("roll");
-          this.playSound("stop");
-          for (let i = 0; i < 5; i++) {
-              this.collidableObjects[i].model.position[1] = 0;
-          }
-          break;
-
-      }
-    });
-
-    //console.log(this.multiplier);
 
     // When dice stop spinning, read values to check results
     if (this.multiplier <= 0 && this.canScore == true) {
@@ -438,4 +419,3 @@ class Game {
   };
     /* THIS MARKS THE END OF THE GAMEPLAY LOOP */
   }
-
